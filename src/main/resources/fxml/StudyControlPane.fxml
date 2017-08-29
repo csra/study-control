@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXSpinner?>
+<?import java.net.URL?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" prefHeight="550.0" prefWidth="929.0" style="-fx-background-color: black;" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.citec.csra.studycontrol.StudyControlPaneController">
+    <stylesheets>
+        <URL value="@/styles/main-style.css" />
+    </stylesheets>
+   <children>
+      <Pane fx:id="participantConfigPane" layoutX="14.0" layoutY="122.0" prefHeight="107.0" prefWidth="330.0" style="-fx-border-color: #444444; -fx-background-color: white;">
+         <children>
+            <Label layoutX="227.0" layoutY="15.0" text="Participant ID" />
+            <ComboBox fx:id="conditionComboBox" layoutX="14.0" layoutY="49.0" prefHeight="26.0" prefWidth="203.0" />
+            <TextField fx:id="participantIdTextField" layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="203.0" />
+            <Label layoutX="227.0" layoutY="54.0" text="Condition" />
+         </children>
+      </Pane>
+      <Pane fx:id="recordPane" layoutX="359.0" layoutY="122.0" prefHeight="107.0" prefWidth="330.0" style="-fx-border-color: #444444; -fx-background-color: white;">
+         <children>
+            <Button fx:id="recordStartButton" layoutX="15.0" layoutY="67.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="118.0" text="Record" />
+            <Button fx:id="recordStopButton" layoutX="198.0" layoutY="67.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="118.0" text="Stop" />
+            <Pane fx:id="recordingStatePane" layoutX="15.0" layoutY="14.0" prefHeight="44.0" prefWidth="301.0" style="-fx-background-color: white; -fx-border-color: black;">
+               <children>
+                  <Label fx:id="recordingStateLabel" alignment="CENTER" layoutX="-3.0" layoutY="14.0" prefHeight="16.0" prefWidth="301.0" text="Standby">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font></Label>
+               </children>
+            </Pane>
+            <JFXSpinner id="recordSpinner" fx:id="recordSpinner" layoutX="150.0" layoutY="64.0" visible="false" />
+         </children>
+      </Pane>
+      <Pane fx:id="settingsPane" layoutX="14.0" layoutY="21.0" prefHeight="88.0" prefWidth="675.0" style="-fx-border-color: #444444; -fx-background-color: white;">
+         <children>
+            <TextField fx:id="savePath" layoutX="14.0" layoutY="45.0" prefHeight="26.0" prefWidth="535.0" text="/vol/csra/data/persistent/study" />
+            <Label layoutX="560.0" layoutY="50.0" text="Save Data Path" />
+            <TextField fx:id="studyName" layoutX="14.0" layoutY="14.0" prefHeight="26.0" prefWidth="535.0" />
+            <Label layoutX="560.0" layoutY="19.0" text="Study Name" />
+         </children>
+      </Pane>
+      <TextArea fx:id="logArea" layoutX="14.0" layoutY="241.0" prefHeight="294.0" prefWidth="896.0">
+         <font>
+            <Font name="Monospaced Regular" size="12.0" />
+         </font>
+      </TextArea>
+      <Pane fx:id="configPane" layoutX="701.0" layoutY="21.0" prefHeight="208.0" prefWidth="209.0" style="-fx-border-color: #444444; -fx-background-color: white;">
+         <children>
+            <JFXSpinner id="recordSpinner" fx:id="recordSpinner1" layoutX="150.0" layoutY="64.0" visible="false" />
+            <CheckBox fx:id="enableStartScriptCheckBox" layoutX="15.0" layoutY="46.0" mnemonicParsing="false" selected="true" text="enable start script" />
+            <CheckBox fx:id="enableStopScriptCheckBox" layoutX="15.0" layoutY="80.0" mnemonicParsing="false" selected="true" text="enable stop script" />
+            <CheckBox fx:id="enableConditionScriptCheckBox" layoutX="15.0" layoutY="14.0" mnemonicParsing="false" selected="true" text="enable condition" />
+            <CheckBox fx:id="enableRSBagRecordCheckBox" layoutX="15.0" layoutY="145.0" mnemonicParsing="false" selected="true" text="enable rsbag recording" />
+            <CheckBox fx:id="enableVideoRecordCheckBox" layoutX="15.0" layoutY="176.0" mnemonicParsing="false" selected="true" text="enable video recording" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
