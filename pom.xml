@@ -147,6 +147,11 @@
             <artifactId>jul.visual.javafx</artifactId>
             <version>${dependency.jul.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.openbase</groupId>
+            <artifactId>jul.extension.rsb.com</artifactId>
+            <version>${dependency.jul.version}</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-exec -->
         <dependency>
             <groupId>org.apache.commons</groupId>

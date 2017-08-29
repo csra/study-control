@@ -15,6 +15,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -39,6 +41,8 @@ import org.openbase.jul.exception.NotAvailableException;
 import org.openbase.jul.exception.VerificationFailedException;
 import org.openbase.jul.exception.printer.ExceptionPrinter;
 import org.openbase.jul.exception.printer.VariablePrinter;
+import org.openbase.jul.extension.rsb.com.RSBFactoryImpl;
+import org.openbase.jul.extension.rsb.iface.RSBRemoteServer;
 import org.openbase.jul.visual.javafx.iface.DynamicPane;
 
 /**
@@ -207,7 +211,7 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
             try {
                 stopRecording();
                 recordingProperty.set(false);
-            } catch (CouldNotPerformException ex) {
+            } catch (CouldNotPerformException | InterruptedException ex) {
                 print(ex);
             }
         });
@@ -227,6 +231,10 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
         conditionComboBox.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
             updateDynamicContent();
         });
+
+        logArea.textProperty().addListener((observable, oldValue, newValue) -> {
+            logArea.setScrollTop(Double.MAX_VALUE);
+        });
     }
 
     @Override
@@ -237,14 +245,16 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
     public void print(final String message) {
         printer.print(message);
         logArea.setText(printer.getMessages());
-        logArea.setScrollTop(Double.MAX_VALUE);
+        logArea.appendText("");
     }
 
     public void print(final Exception ex) {
         ExceptionPrinter.printHistory(ex, printer);
-        logArea.setText(printer.getMessages());
         recordingStatePane.setStyle("-fx-background-color: orange");
         recordingStateLabel.setText("Warning");
+        logArea.setText(printer.getMessages());
+        logArea.appendText("");
+
     }
 
     public boolean isValid() {
@@ -311,12 +321,12 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
                 print("start script execution skiped because its not available.");
             }
         }
-        
+
         // start rsbag recording
         if (enableRSBagRecordCheckBox.isSelected()) {
             print("start rsb recording... ");
         }
-        
+
         // start video recording
         if (enableVideoRecordCheckBox.isSelected()) {
             print("start video recording... ");
@@ -326,7 +336,7 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
         print("start recording on " + recordPath);
     }
 
-    public void stopRecording() throws CouldNotPerformException {
+    public void stopRecording() throws CouldNotPerformException, InterruptedException {
         if (enableStopScriptCheckBox.isSelected()) {
             // execute stop script
             try {
@@ -335,15 +345,15 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
                 print("stop script execution skiped because its not available.");
             }
         }
-        
+
         // stop rsbag recording
         if (enableRSBagRecordCheckBox.isSelected()) {
-            print("stop rsb recording... ");
+            stopRSBagRecording();
         }
-        
+
         // stop video recording
         if (enableVideoRecordCheckBox.isSelected()) {
-            print("stop video recording... ");
+            stopVideoRecording();
         }
 
         print("stopped recording on " + recordPath);
@@ -381,11 +391,55 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
 
         try {
             print("execute: " + script.getAbsolutePath());
+
+            final Map<String, String> env = new HashMap<>();
+
+            env.put("STUDY_NAME", studyName.getText());
+            env.put("STUDY_PARTICIPANT_ID", participantIdTextField.getText());
+            env.put("STUDY_CONDITION", conditionComboBox.getSelectionModel().getSelectedItem());
+            env.put("STUDY_RUN_PREFIX", recordPath);
+
             executor.setStreamHandler(scriptStreamHandler);
             executor.setExitValue(0);
-            executor.execute(command);
+            executor.execute(command, env);
         } catch (IOException ex) {
             throw new CouldNotPerformException("Could not execute " + script.getAbsolutePath(), ex);
         }
+    }
+
+    public void startVideoRecording() throws CouldNotPerformException, InterruptedException {
+        print("start video recording... ");
+        RSBRemoteServer createSynchronizedRemoteServer = RSBFactoryImpl.getInstance().createSynchronizedRemoteServer("/videorecorder");
+        createSynchronizedRemoteServer.activate();
+        createSynchronizedRemoteServer.call("stop");
+        createSynchronizedRemoteServer.call("close");
+        createSynchronizedRemoteServer.call("open", savePath);
+        createSynchronizedRemoteServer.call("start");
+    }
+
+    public void stopVideoRecording() throws CouldNotPerformException, InterruptedException {
+        print("stop video recording... ");
+        RSBRemoteServer createSynchronizedRemoteServer = RSBFactoryImpl.getInstance().createSynchronizedRemoteServer("/videorecorder");
+        createSynchronizedRemoteServer.activate();
+        createSynchronizedRemoteServer.call("stop");
+        createSynchronizedRemoteServer.call("close");
+    }
+
+    public void startRSBagRecording() throws CouldNotPerformException, InterruptedException {
+        print("stop rsbag recording... ");
+        RSBRemoteServer createSynchronizedRemoteServer = RSBFactoryImpl.getInstance().createSynchronizedRemoteServer("/logger/rsbag/all");
+        createSynchronizedRemoteServer.activate();
+        createSynchronizedRemoteServer.call("stop");
+        createSynchronizedRemoteServer.call("close");
+        createSynchronizedRemoteServer.call("open", savePath);
+        createSynchronizedRemoteServer.call("start");
+    }
+
+    public void stopRSBagRecording() throws CouldNotPerformException, InterruptedException {
+        print("stop rsbag recording... ");
+        RSBRemoteServer createSynchronizedRemoteServer = RSBFactoryImpl.getInstance().createSynchronizedRemoteServer("/logger/rsbag/all");
+        createSynchronizedRemoteServer.activate();
+        createSynchronizedRemoteServer.call("stop");
+        createSynchronizedRemoteServer.call("close");
     }
 }
