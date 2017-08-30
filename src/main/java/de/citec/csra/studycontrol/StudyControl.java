@@ -15,9 +15,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.openbase.jps.core.JPService;
 
-
 public class StudyControl extends Application {
-
+    
     @Override
     public void start(Stage stage) throws Exception {
         
@@ -38,6 +37,12 @@ public class StudyControl extends Application {
         stage.setTitle("CSRA Study Control");
         stage.setScene(scene);
         stage.show();
+    }
+    
+    @Override
+    public void stop() throws Exception {
+        super.stop();
+        System.exit(0);
     }
 
     /**

@@ -44,6 +44,8 @@ import org.openbase.jul.exception.NotAvailableException;
 import org.openbase.jul.exception.VerificationFailedException;
 import org.openbase.jul.exception.printer.ExceptionPrinter;
 import org.openbase.jul.exception.printer.VariablePrinter;
+import org.openbase.jul.extension.rsb.com.RSBFactoryImpl;
+import org.openbase.jul.extension.rsb.iface.RSBRemoteServer;
 import org.openbase.jul.schedule.GlobalCachedExecutorService;
 import org.openbase.jul.visual.javafx.iface.DynamicPane;
 
@@ -270,7 +272,7 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
             });
         }
     }
-    
+
     public void internalPrint(final String message) {
         printer.print(message);
         logArea.setText(printer.getMessages());
@@ -359,19 +361,27 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
                 if (enableVideoRecordCheckBox.isSelected()) {
                     startVideoRecording();
                 }
+
+                // mark recording as started
+                Platform.runLater(() -> {
+                    recordingProperty.set(true);
+                });
             } catch (CouldNotPerformException ex) {
                 Exception exx = new CouldNotPerformException("Could not start recording!", ex);
                 print(exx);
                 throw exx;
+            } finally {
+                clearAction();
             }
-
-            currentAction = null;
-
-            Platform.runLater(() -> {
-                busyProperty.set(false);
-                recordingProperty.set(true);
-            });
             return null;
+        });
+    }
+
+    private void clearAction() {
+        currentAction = null;
+
+        Platform.runLater(() -> {
+            busyProperty.set(false);
         });
     }
 
@@ -403,18 +413,18 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
                 }
 
                 print("stopped recording on " + recordPath);
+
+                // mark recording as stopped
+                Platform.runLater(() -> {
+                    recordingProperty.set(false);
+                });
             } catch (CouldNotPerformException ex) {
                 Exception exx = new CouldNotPerformException("Could not stop recording!", ex);
                 print(exx);
                 throw exx;
+            } finally {
+                clearAction();
             }
-
-            currentAction = null;
-
-            Platform.runLater(() -> {
-                busyProperty.set(false);
-                recordingProperty.set(false);
-            });
             return null;
         });
     }
@@ -437,9 +447,15 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
             if (!scriptFolder.exists()) {
                 throw new NotAvailableException("condition script directory");
             }
-            return new File(scriptFolder, conditionComboBox.getSelectionModel().getSelectedItem() + ".sh");
-        } catch (Exception ex) { 
-           throw new CouldNotPerformException(ex);
+            
+            final File conditionScript = new File(scriptFolder, conditionComboBox.getSelectionModel().getSelectedItem() + ".sh");
+            if (!conditionScript.exists()) {
+                throw new NotAvailableException("condition script");
+            }
+            
+            return conditionScript;
+        } catch (Exception ex) {
+            throw new CouldNotPerformException(ex);
         }
     }
 
@@ -454,7 +470,7 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
             env.put("STUDY_NAME", studyName.getText());
             env.put("STUDY_PARTICIPANT_ID", participantIdTextField.getText());
             env.put("STUDY_CONDITION", conditionComboBox.getSelectionModel().getSelectedItem());
-            env.put("STUDY_RUN_PREFIX", recordPath);
+            env.put("STUDY_RECORD_PATH", recordPath);
 
             executor.setStreamHandler(scriptStreamHandler);
             executor.setExitValue(0);
@@ -488,33 +504,61 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
     }
 
     public void startRecordServer(final String scope) throws CouldNotPerformException, InterruptedException {
-        Thread.sleep(10000);
-//        RSBRemoteServer recordServer = RSBFactoryImpl.getInstance().createSynchronizedRemoteServer(scope);
-//        recordServer.activate();
-//
-//        if ((Boolean) recordServer.call("isstarted").getData()) {
-//            recordServer.call("stop");
-//        }
-//
-//        if ((Boolean) recordServer.call("isopen").getData()) {
-//            recordServer.call("close");
-//        }
-//
-//        recordServer.call("open", savePath);
-//        recordServer.call("start");
+        RSBRemoteServer recordServer = RSBFactoryImpl.getInstance().createSynchronizedRemoteServer(scope);
+        recordServer.activate();
+
+        if ((Boolean) recordServer.call("isstarted").getData()) {
+            print("there is still a recording ongoing which will now be finished via record server" + scope);
+            stopRecordServer(scope);
+        }
+
+        if ((Boolean) recordServer.call("isopen").getData()) {
+            print("there is still a record file opened which will now be closed via record server" + scope);
+            stopRecordServer(scope);
+        }
+
+        // open
+        print("open new file via record server " + scope);
+        recordServer.call("open", recordPath);
+
+        // verify open
+        if (!(Boolean) recordServer.call("isopen").getData()) {
+            throw new VerificationFailedException("could not open record file via record server " + scope);
+        }
+
+        // start
+        print("try to start recording via record server " + scope);
+        recordServer.call("start");
+
+        // verify start
+        if (!(Boolean) recordServer.call("isstarted").getData()) {
+            throw new VerificationFailedException("could not start recording via record server " + scope);
+        }
+
+        print("recording successfully started on record server " + scope);
     }
 
     public void stopRecordServer(final String scope) throws CouldNotPerformException, InterruptedException {
-        Thread.sleep(10000);
-//        RSBRemoteServer recordServer = RSBFactoryImpl.getInstance().createSynchronizedRemoteServer(scope);
-//        recordServer.activate();
-//
-//        if ((Boolean) recordServer.call("isstarted").getData()) {
-//            recordServer.call("stop");
-//        }
-//
-//        if ((Boolean) recordServer.call("isopen").getData()) {
-//            recordServer.call("close");
-//        }
+        RSBRemoteServer recordServer = RSBFactoryImpl.getInstance().createSynchronizedRemoteServer(scope);
+        recordServer.activate();
+
+        if ((Boolean) recordServer.call("isstarted").getData()) {
+            recordServer.call("stop");
+        }
+
+        if ((Boolean) recordServer.call("isopen").getData()) {
+            recordServer.call("close");
+        }
+
+        // verify
+        if ((Boolean) recordServer.call("isstarted").getData()) {
+            throw new VerificationFailedException("could not stop recording via record server " + scope, new InvalidStateException("record server " + scope + " does not respont!"));
+        }
+
+        if ((Boolean) recordServer.call("isopen").getData()) {
+            throw new VerificationFailedException("could not close record file via record server " + scope);
+        }
+
+        print("recording stopped on record server " + scope);
     }
 }
