@@ -90,7 +90,7 @@
                     <programs>
                         <program>
                             <mainClass>${mainClass}</mainClass>
-                            <id>bcozy</id>
+                            <id>study-control</id>
                             <platforms>
                                 <platform>unix</platform>
                             </platforms>

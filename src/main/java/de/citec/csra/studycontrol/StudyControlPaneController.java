@@ -1,8 +1,8 @@
 package de.citec.csra.studycontrol;
 
 import com.jfoenix.controls.JFXSpinner;
-import de.citec.csra.studycontrol.jp.JPStartRecordScript;
-import de.citec.csra.studycontrol.jp.JPStopRecordScript;
+import de.citec.csra.studycontrol.jp.JPStudyStartRecordScript;
+import de.citec.csra.studycontrol.jp.JPStudyStopRecordScript;
 import de.citec.csra.studycontrol.jp.JPStudyCondition;
 import de.citec.csra.studycontrol.jp.JPStudyConditionScriptDirectory;
 import de.citec.csra.studycontrol.jp.JPStudyDataPefix;
@@ -180,6 +180,24 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
             print(ex);
         }
 
+        try {
+            enableStartScriptCheckBox.setSelected(JPService.getProperty(JPStudyStartRecordScript.class).isParsed());
+        } catch (JPNotAvailableException ex) {
+            enableStartScriptCheckBox.setSelected(false);
+        }
+
+        try {
+            enableStopScriptCheckBox.setSelected(JPService.getProperty(JPStudyStopRecordScript.class).isParsed());
+        } catch (JPNotAvailableException ex) {
+            enableStopScriptCheckBox.setSelected(false);
+        }
+
+        try {
+            enableConditionScriptCheckBox.setSelected(JPService.getProperty(JPStudyConditionScriptDirectory.class).isParsed());
+        } catch (JPNotAvailableException ex) {
+            enableConditionScriptCheckBox.setSelected(false);
+        }
+
         recordingProperty.addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean recording) -> {
             try {
                 if (recording) {
@@ -346,7 +364,7 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
                 // execute start script
                 if (enableStartScriptCheckBox.isSelected()) {
                     try {
-                        executeScript(loadScript(JPStartRecordScript.class));
+                        executeScript(loadScript(JPStudyStartRecordScript.class));
                     } catch (final NotAvailableException ex) {
                         print("start script execution skiped because its not available.");
                     }
@@ -396,7 +414,7 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
                 if (enableStopScriptCheckBox.isSelected()) {
                     // execute stop script
                     try {
-                        executeScript(loadScript(JPStopRecordScript.class));
+                        executeScript(loadScript(JPStudyStopRecordScript.class));
                     } catch (final NotAvailableException ex) {
                         print("stop script execution skiped because its not available.");
                     }
@@ -447,12 +465,12 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
             if (!scriptFolder.exists()) {
                 throw new NotAvailableException("condition script directory");
             }
-            
+
             final File conditionScript = new File(scriptFolder, conditionComboBox.getSelectionModel().getSelectedItem() + ".sh");
             if (!conditionScript.exists()) {
                 throw new NotAvailableException("condition script");
             }
-            
+
             return conditionScript;
         } catch (Exception ex) {
             throw new CouldNotPerformException(ex);

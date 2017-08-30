@@ -1,13 +1,12 @@
 package de.citec.csra.studycontrol;
 
-import de.citec.csra.studycontrol.jp.JPStartRecordScript;
-import de.citec.csra.studycontrol.jp.JPStopRecordScript;
+import de.citec.csra.studycontrol.jp.JPStudyStartRecordScript;
+import de.citec.csra.studycontrol.jp.JPStudyStopRecordScript;
 import de.citec.csra.studycontrol.jp.JPStudyCondition;
 import de.citec.csra.studycontrol.jp.JPStudyConditionScriptDirectory;
 import de.citec.csra.studycontrol.jp.JPStudyDataPefix;
 import de.citec.csra.studycontrol.jp.JPStudyName;
 import de.citec.csra.studycontrol.jp.JPStudyParticipantId;
-import java.io.File;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,9 +24,9 @@ public class StudyControl extends Application {
         JPService.registerProperty(JPStudyDataPefix.class);
         JPService.registerProperty(JPStudyParticipantId.class);
         JPService.registerProperty(JPStudyCondition.class);
-        JPService.registerProperty(JPStudyConditionScriptDirectory.class, new File("/home/divine/tmp/condition"));
-        JPService.registerProperty(JPStartRecordScript.class, new File("/home/divine/tmp/start.sh"));
-        JPService.registerProperty(JPStopRecordScript.class, new File("/home/divine/tmp/stop.sh"));
+        JPService.registerProperty(JPStudyConditionScriptDirectory.class);
+        JPService.registerProperty(JPStudyStartRecordScript.class);
+        JPService.registerProperty(JPStudyStopRecordScript.class);
         JPService.parseAndExitOnError(getParameters().getRaw());
         
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/StudyControlPane.fxml"));
