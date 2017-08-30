@@ -507,7 +507,7 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
 
     public void startVideoRecording() throws CouldNotPerformException, InterruptedException {
         print("start video recording... ");
-        startRecordServer(SCOPE_VIDEO_RECORD);
+        startRecordServer(SCOPE_VIDEO_RECORD, recordFile);
     }
 
     public void stopVideoRecording() throws CouldNotPerformException, InterruptedException {
@@ -517,7 +517,7 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
 
     public void startRSBagRecording() throws CouldNotPerformException, InterruptedException {
         print("start rsbag recording... ");
-        startRecordServer(SCOPE_RSBAG_RECORD);
+        startRecordServer(SCOPE_RSBAG_RECORD, recordFile + ".tide");
     }
 
     public void stopRSBagRecording() throws CouldNotPerformException, InterruptedException {
@@ -525,7 +525,7 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
         stopRecordServer(SCOPE_RSBAG_RECORD);
     }
 
-    public void startRecordServer(final String scope) throws CouldNotPerformException, InterruptedException {
+    public void startRecordServer(final String scope, final String recordFile) throws CouldNotPerformException, InterruptedException {
         RSBRemoteServer recordServer = RSBFactoryImpl.getInstance().createSynchronizedRemoteServer(scope);
         recordServer.activate();
 

@@ -7,6 +7,7 @@ import de.citec.csra.studycontrol.jp.JPStudyConditionScriptDirectory;
 import de.citec.csra.studycontrol.jp.JPStudyDataPefix;
 import de.citec.csra.studycontrol.jp.JPStudyName;
 import de.citec.csra.studycontrol.jp.JPStudyParticipantId;
+import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -20,10 +21,13 @@ public class StudyControl extends Application {
     public void start(Stage stage) throws Exception {
         
         JPService.setApplicationName(StudyControl.class);
-        JPService.registerProperty(JPStudyName.class);
+        JPService.registerProperty(JPStudyName.class, "bcomfy");
         JPService.registerProperty(JPStudyDataPefix.class);
-        JPService.registerProperty(JPStudyParticipantId.class);
-        JPService.registerProperty(JPStudyCondition.class);
+        JPService.registerProperty(JPStudyParticipantId.class, "0");
+        ArrayList<String> conditions = new ArrayList<String>(2);
+        conditions.add("1");
+        conditions.add("2");
+        JPService.registerProperty(JPStudyCondition.class, conditions);
         JPService.registerProperty(JPStudyConditionScriptDirectory.class);
         JPService.registerProperty(JPStudyStartRecordScript.class);
         JPService.registerProperty(JPStudyStopRecordScript.class);
