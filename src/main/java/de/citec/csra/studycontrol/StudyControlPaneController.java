@@ -61,6 +61,7 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
     private final BooleanProperty recordingValidProperty = new SimpleBooleanProperty(false);
     private final VariablePrinter printer = new VariablePrinter();
     private String recordPath;
+    private String recordFile;
     private ExecuteStreamHandler scriptStreamHandler = new ExecuteStreamHandler() {
         @Override
         public void setProcessInputStream(OutputStream os) throws IOException {
@@ -349,8 +350,10 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
             try {
                 verifyRecording();
 
-                recordPath = savePath.getText() + "/" + studyName.getText() + "/" + conditionComboBox.getSelectionModel().getSelectedItem() + "/" + participantIdTextField.getText();
+                recordPath = savePath.getText() + "/" + studyName.getText() + "/participant-" + participantIdTextField.getText();
+                recordFile = recordPath + "/" + "condition-" + conditionComboBox.getSelectionModel().getSelectedItem();
                 print("setup record path to " + recordPath);
+                print("setup record file to " + recordFile);
 
                 // execute condition script
                 if (enableConditionScriptCheckBox.isSelected()) {
@@ -430,7 +433,7 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
                     stopVideoRecording();
                 }
 
-                print("stopped recording on " + recordPath);
+                print("stopped recording on " + recordFile);
 
                 // mark recording as stopped
                 Platform.runLater(() -> {
@@ -489,6 +492,7 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
             env.put("STUDY_PARTICIPANT_ID", participantIdTextField.getText());
             env.put("STUDY_CONDITION", conditionComboBox.getSelectionModel().getSelectedItem());
             env.put("STUDY_RECORD_PATH", recordPath);
+            env.put("STUDY_RECORD_FILE", recordFile);
 
             executor.setStreamHandler(scriptStreamHandler);
             executor.setExitValue(0);
@@ -537,7 +541,7 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
 
         // open
         print("open new file via record server " + scope);
-        recordServer.call("open", recordPath);
+        recordServer.call("open", recordFile);
 
         // verify open
         if (!(Boolean) recordServer.call("isopen").getData()) {
