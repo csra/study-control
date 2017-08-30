@@ -31,9 +31,9 @@
             <Button fx:id="recordStopButton" layoutX="198.0" layoutY="67.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="118.0" text="Stop" />
             <Pane fx:id="recordingStatePane" layoutX="15.0" layoutY="14.0" prefHeight="44.0" prefWidth="301.0" style="-fx-background-color: white; -fx-border-color: black;">
                <children>
-                  <Label fx:id="recordingStateLabel" alignment="CENTER" layoutX="-3.0" layoutY="14.0" prefHeight="16.0" prefWidth="301.0" text="Standby">
+                  <Label fx:id="recordingStateLabel" alignment="CENTER" layoutX="-3.0" layoutY="-4.0" prefHeight="51.0" prefWidth="301.0" text="Standby">
                      <font>
-                        <Font name="System Bold" size="13.0" />
+                        <Font name="System Bold" size="22.0" />
                      </font></Label>
                </children>
             </Pane>

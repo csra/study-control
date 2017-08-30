@@ -18,6 +18,8 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.concurrent.Future;
+import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.value.ObservableValue;
@@ -37,12 +39,12 @@ import org.openbase.jps.core.JPService;
 import org.openbase.jps.exception.JPNotAvailableException;
 import org.openbase.jps.preset.AbstractJPFile;
 import org.openbase.jul.exception.CouldNotPerformException;
+import org.openbase.jul.exception.InvalidStateException;
 import org.openbase.jul.exception.NotAvailableException;
 import org.openbase.jul.exception.VerificationFailedException;
 import org.openbase.jul.exception.printer.ExceptionPrinter;
 import org.openbase.jul.exception.printer.VariablePrinter;
-import org.openbase.jul.extension.rsb.com.RSBFactoryImpl;
-import org.openbase.jul.extension.rsb.iface.RSBRemoteServer;
+import org.openbase.jul.schedule.GlobalCachedExecutorService;
 import org.openbase.jul.visual.javafx.iface.DynamicPane;
 
 /**
@@ -53,6 +55,7 @@ import org.openbase.jul.visual.javafx.iface.DynamicPane;
 public class StudyControlPaneController implements Initializable, DynamicPane {
 
     private final BooleanProperty recordingProperty = new SimpleBooleanProperty(false);
+    private final BooleanProperty busyProperty = new SimpleBooleanProperty(false);
     private final BooleanProperty recordingValidProperty = new SimpleBooleanProperty(false);
     private final VariablePrinter printer = new VariablePrinter();
     private String recordPath;
@@ -146,6 +149,8 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
     @FXML
     private CheckBox enableVideoRecordCheckBox;
 
+    private Future currentAction;
+
     /**
      * Initializes the controller class.
      *
@@ -179,8 +184,8 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
                     recordingStatePane.setStyle("-fx-background-color: red");
                     recordingStateLabel.setText("Recording started");
                 } else {
-                    recordingStatePane.setStyle("-fx-background-color: green");
-                    recordingStateLabel.setText("Recording stopped");
+                    recordingStatePane.setStyle("-fx-background-color: blue");
+                    recordingStateLabel.setText("Recording Stopped");
                 }
             } catch (Exception ex) {
                 ExceptionPrinter.printHistory(ex, System.err);
@@ -188,20 +193,22 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
             }
         });
 
-        recordSpinner.visibleProperty().bind(recordingProperty);
-        recordStartButton.disableProperty().bind(recordingProperty);
-        recordStopButton.disableProperty().bind(recordingProperty.not().and(recordingValidProperty));
-        settingsPane.disableProperty().bind(recordingProperty);
-        configPane.disableProperty().bind(recordingProperty);
-        participantConfigPane.disableProperty().bind(recordingProperty);
-        recordPane.disableProperty().bind(recordingValidProperty.not());
+        recordSpinner.visibleProperty().bind(recordingProperty.or(busyProperty));
+        recordStartButton.disableProperty().bind(recordingProperty.or(busyProperty));
+        recordStopButton.disableProperty().bind(recordingProperty.not().and(recordingValidProperty).or(busyProperty));
+        settingsPane.disableProperty().bind(recordingProperty.or(busyProperty));
+        configPane.disableProperty().bind(recordingProperty.or(busyProperty));
+        participantConfigPane.disableProperty().bind(recordingProperty.or(busyProperty));
+        recordPane.disableProperty().bind(recordingValidProperty.not().or(busyProperty));
 
         recordStartButton.setOnAction((event) -> {
             event.consume();
             try {
-                startRecording();
-                recordingProperty.set(true);
-            } catch (CouldNotPerformException ex) {
+                busyProperty.set(true);
+                recordingStatePane.setStyle("-fx-background-color: green");
+                recordingStateLabel.setText("Setup Recording");
+                currentAction = startRecording();
+            } catch (Exception ex) {
                 print(ex);
             }
         });
@@ -209,9 +216,11 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
         recordStopButton.setOnAction((event) -> {
             event.consume();
             try {
-                stopRecording();
-                recordingProperty.set(false);
-            } catch (CouldNotPerformException | InterruptedException ex) {
+                busyProperty.set(true);
+                recordingStatePane.setStyle("-fx-background-color: green");
+                recordingStateLabel.setText("Finish Recording");
+                currentAction = stopRecording();
+            } catch (Exception ex) {
                 print(ex);
             }
         });
@@ -243,18 +252,37 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
     }
 
     public void print(final String message) {
+        if (Platform.isFxApplicationThread()) {
+            internalPrint(message);
+        } else {
+            Platform.runLater(() -> {
+                internalPrint(message);
+            });
+        }
+    }
+
+    public void print(final Exception ex) {
+        if (Platform.isFxApplicationThread()) {
+            internalPrint(ex);
+        } else {
+            Platform.runLater(() -> {
+                internalPrint(ex);
+            });
+        }
+    }
+    
+    public void internalPrint(final String message) {
         printer.print(message);
         logArea.setText(printer.getMessages());
         logArea.appendText("");
     }
 
-    public void print(final Exception ex) {
+    public void internalPrint(final Exception ex) {
         ExceptionPrinter.printHistory(ex, printer);
         recordingStatePane.setStyle("-fx-background-color: orange");
-        recordingStateLabel.setText("Warning");
+        recordingStateLabel.setText("Warning Occured");
         logArea.setText(printer.getMessages());
         logArea.appendText("");
-
     }
 
     public boolean isValid() {
@@ -291,73 +319,104 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
         recordingValidProperty.set(true);
     }
 
-    public void startRecording() throws CouldNotPerformException {
-        if (studyName.getText().isEmpty()) {
-            throw new NotAvailableException("StudyName");
+    public Future<Void> startRecording() throws CouldNotPerformException {
+
+        if (currentAction != null) {
+            throw new InvalidStateException("There is still a action ongoing!");
         }
 
-        if (savePath.getText().isEmpty()) {
-            throw new NotAvailableException("SavePath");
-        }
-
-        if (participantIdTextField.getText().isEmpty()) {
-            throw new NotAvailableException("Participant Id");
-        }
-
-        // execute condition script
-        if (enableConditionScriptCheckBox.isSelected()) {
+        return GlobalCachedExecutorService.submit(() -> {
             try {
-                executeScript(loadConditionScript(JPStudyConditionScriptDirectory.class));
-            } catch (final NotAvailableException ex) {
-                print("condition script execution skiped because its not available.");
+                verifyRecording();
+
+                recordPath = savePath.getText() + "/" + studyName.getText() + "/" + conditionComboBox.getSelectionModel().getSelectedItem() + "/" + participantIdTextField.getText();
+                print("setup record path to " + recordPath);
+
+                // execute condition script
+                if (enableConditionScriptCheckBox.isSelected()) {
+                    try {
+                        executeScript(loadConditionScript(JPStudyConditionScriptDirectory.class));
+                    } catch (final NotAvailableException ex) {
+                        print("condition script execution skiped because its not available.");
+                    }
+                }
+
+                // execute start script
+                if (enableStartScriptCheckBox.isSelected()) {
+                    try {
+                        executeScript(loadScript(JPStartRecordScript.class));
+                    } catch (final NotAvailableException ex) {
+                        print("start script execution skiped because its not available.");
+                    }
+                }
+
+                // start rsbag recording
+                if (enableRSBagRecordCheckBox.isSelected()) {
+                    startRSBagRecording();
+                }
+
+                // start video recording
+                if (enableVideoRecordCheckBox.isSelected()) {
+                    startVideoRecording();
+                }
+            } catch (CouldNotPerformException ex) {
+                Exception exx = new CouldNotPerformException("Could not start recording!", ex);
+                print(exx);
+                throw exx;
             }
-        }
 
-        // execute start script
-        if (enableStartScriptCheckBox.isSelected()) {
-            try {
-                executeScript(loadScript(JPStartRecordScript.class));
-            } catch (final NotAvailableException ex) {
-                print("start script execution skiped because its not available.");
-            }
-        }
+            currentAction = null;
 
-        // start rsbag recording
-        if (enableRSBagRecordCheckBox.isSelected()) {
-            print("start rsb recording... ");
-        }
-
-        // start video recording
-        if (enableVideoRecordCheckBox.isSelected()) {
-            print("start video recording... ");
-        }
-
-        recordPath = savePath.getText() + "/" + studyName.getText() + "/" + conditionComboBox.getSelectionModel().getSelectedItem() + "/" + participantIdTextField.getText();
-        print("start recording on " + recordPath);
+            Platform.runLater(() -> {
+                busyProperty.set(false);
+                recordingProperty.set(true);
+            });
+            return null;
+        });
     }
 
-    public void stopRecording() throws CouldNotPerformException, InterruptedException {
-        if (enableStopScriptCheckBox.isSelected()) {
-            // execute stop script
+    public Future stopRecording() throws CouldNotPerformException, InterruptedException {
+
+        if (currentAction != null) {
+            throw new InvalidStateException("There is still a action ongoing!");
+        }
+
+        return GlobalCachedExecutorService.submit(() -> {
             try {
-                executeScript(loadScript(JPStopRecordScript.class));
-            } catch (final NotAvailableException ex) {
-                print("stop script execution skiped because its not available.");
+                if (enableStopScriptCheckBox.isSelected()) {
+                    // execute stop script
+                    try {
+                        executeScript(loadScript(JPStopRecordScript.class));
+                    } catch (final NotAvailableException ex) {
+                        print("stop script execution skiped because its not available.");
+                    }
+                }
+
+                // stop rsbag recording
+                if (enableRSBagRecordCheckBox.isSelected()) {
+                    stopRSBagRecording();
+                }
+
+                // stop video recording
+                if (enableVideoRecordCheckBox.isSelected()) {
+                    stopVideoRecording();
+                }
+
+                print("stopped recording on " + recordPath);
+            } catch (CouldNotPerformException ex) {
+                Exception exx = new CouldNotPerformException("Could not stop recording!", ex);
+                print(exx);
+                throw exx;
             }
-        }
 
-        // stop rsbag recording
-        if (enableRSBagRecordCheckBox.isSelected()) {
-            stopRSBagRecording();
-        }
+            currentAction = null;
 
-        // stop video recording
-        if (enableVideoRecordCheckBox.isSelected()) {
-            stopVideoRecording();
-        }
-
-        print("stopped recording on " + recordPath);
-
+            Platform.runLater(() -> {
+                busyProperty.set(false);
+                recordingProperty.set(false);
+            });
+            return null;
+        });
     }
 
     public File loadScript(final Class<? extends AbstractJPFile> scriptJP) throws CouldNotPerformException {
@@ -379,18 +438,16 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
                 throw new NotAvailableException("condition script directory");
             }
             return new File(scriptFolder, conditionComboBox.getSelectionModel().getSelectedItem() + ".sh");
-        } catch (Exception ex) {
-            throw new CouldNotPerformException(ex);
+        } catch (Exception ex) { 
+           throw new CouldNotPerformException(ex);
         }
     }
 
     public void executeScript(final File script) throws CouldNotPerformException {
-        final CommandLine command = CommandLine.parse(script.getAbsolutePath());
-
-        final DefaultExecutor executor = new DefaultExecutor();
-
+        print("execute: " + script.getAbsolutePath());
         try {
-            print("execute: " + script.getAbsolutePath());
+            final CommandLine command = CommandLine.parse(script.getAbsolutePath());
+            final DefaultExecutor executor = new DefaultExecutor();
 
             final Map<String, String> env = new HashMap<>();
 
@@ -407,39 +464,57 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
         }
     }
 
+    public static final String SCOPE_VIDEO_RECORD = "/videorecorder";
+    public static final String SCOPE_RSBAG_RECORD = "/logger/rsbag/all";
+
     public void startVideoRecording() throws CouldNotPerformException, InterruptedException {
         print("start video recording... ");
-        RSBRemoteServer createSynchronizedRemoteServer = RSBFactoryImpl.getInstance().createSynchronizedRemoteServer("/videorecorder");
-        createSynchronizedRemoteServer.activate();
-        createSynchronizedRemoteServer.call("stop");
-        createSynchronizedRemoteServer.call("close");
-        createSynchronizedRemoteServer.call("open", savePath);
-        createSynchronizedRemoteServer.call("start");
+        startRecordServer(SCOPE_VIDEO_RECORD);
     }
 
     public void stopVideoRecording() throws CouldNotPerformException, InterruptedException {
         print("stop video recording... ");
-        RSBRemoteServer createSynchronizedRemoteServer = RSBFactoryImpl.getInstance().createSynchronizedRemoteServer("/videorecorder");
-        createSynchronizedRemoteServer.activate();
-        createSynchronizedRemoteServer.call("stop");
-        createSynchronizedRemoteServer.call("close");
+        stopRecordServer(SCOPE_VIDEO_RECORD);
     }
 
     public void startRSBagRecording() throws CouldNotPerformException, InterruptedException {
-        print("stop rsbag recording... ");
-        RSBRemoteServer createSynchronizedRemoteServer = RSBFactoryImpl.getInstance().createSynchronizedRemoteServer("/logger/rsbag/all");
-        createSynchronizedRemoteServer.activate();
-        createSynchronizedRemoteServer.call("stop");
-        createSynchronizedRemoteServer.call("close");
-        createSynchronizedRemoteServer.call("open", savePath);
-        createSynchronizedRemoteServer.call("start");
+        print("start rsbag recording... ");
+        startRecordServer(SCOPE_RSBAG_RECORD);
     }
 
     public void stopRSBagRecording() throws CouldNotPerformException, InterruptedException {
         print("stop rsbag recording... ");
-        RSBRemoteServer createSynchronizedRemoteServer = RSBFactoryImpl.getInstance().createSynchronizedRemoteServer("/logger/rsbag/all");
-        createSynchronizedRemoteServer.activate();
-        createSynchronizedRemoteServer.call("stop");
-        createSynchronizedRemoteServer.call("close");
+        stopRecordServer(SCOPE_RSBAG_RECORD);
+    }
+
+    public void startRecordServer(final String scope) throws CouldNotPerformException, InterruptedException {
+        Thread.sleep(10000);
+//        RSBRemoteServer recordServer = RSBFactoryImpl.getInstance().createSynchronizedRemoteServer(scope);
+//        recordServer.activate();
+//
+//        if ((Boolean) recordServer.call("isstarted").getData()) {
+//            recordServer.call("stop");
+//        }
+//
+//        if ((Boolean) recordServer.call("isopen").getData()) {
+//            recordServer.call("close");
+//        }
+//
+//        recordServer.call("open", savePath);
+//        recordServer.call("start");
+    }
+
+    public void stopRecordServer(final String scope) throws CouldNotPerformException, InterruptedException {
+        Thread.sleep(10000);
+//        RSBRemoteServer recordServer = RSBFactoryImpl.getInstance().createSynchronizedRemoteServer(scope);
+//        recordServer.activate();
+//
+//        if ((Boolean) recordServer.call("isstarted").getData()) {
+//            recordServer.call("stop");
+//        }
+//
+//        if ((Boolean) recordServer.call("isopen").getData()) {
+//            recordServer.call("close");
+//        }
     }
 }
