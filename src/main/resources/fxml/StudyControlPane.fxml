@@ -28,7 +28,7 @@
       <Pane fx:id="recordPane" layoutX="359.0" layoutY="122.0" prefHeight="107.0" prefWidth="330.0" style="-fx-border-color: #444444; -fx-background-color: white;">
          <children>
             <Button fx:id="recordStartButton" layoutX="15.0" layoutY="67.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="118.0" text="Record" />
-            <Button fx:id="recordStopButton" layoutX="198.0" layoutY="67.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="118.0" text="Stop" />
+            <Button fx:id="recordStopButton" layoutX="265.0" layoutY="67.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="51.0" text="Stop" />
             <Pane fx:id="recordingStatePane" layoutX="15.0" layoutY="14.0" prefHeight="44.0" prefWidth="301.0" style="-fx-background-color: white; -fx-border-color: black;">
                <children>
                   <Label fx:id="recordingStateLabel" alignment="CENTER" layoutX="-3.0" layoutY="-4.0" prefHeight="51.0" prefWidth="301.0" text="Standby">
@@ -38,6 +38,7 @@
                </children>
             </Pane>
             <JFXSpinner id="recordSpinner" fx:id="recordSpinner" layoutX="150.0" layoutY="64.0" visible="false" />
+            <Button fx:id="cancelButton" layoutX="198.0" layoutY="67.0" mnemonicParsing="false" text="Cancel" />
          </children>
       </Pane>
       <Pane fx:id="settingsPane" layoutX="14.0" layoutY="21.0" prefHeight="88.0" prefWidth="675.0" style="-fx-border-color: #444444; -fx-background-color: white;">
