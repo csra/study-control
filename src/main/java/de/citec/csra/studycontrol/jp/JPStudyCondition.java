@@ -18,9 +18,8 @@ public class JPStudyCondition extends AbstractJPListString {
     @Override
     protected List<String> getPropertyDefaultValue() {
         final List conditionList = new ArrayList<>();
-        conditionList.add("condition-1");
-        conditionList.add("condition-2");
-        conditionList.add("condition-3");
+        conditionList.add("1");
+        conditionList.add("2");
         return conditionList;
     }
 
