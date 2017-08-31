@@ -387,7 +387,7 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
                 Platform.runLater(() -> {
                     recordingProperty.set(true);
                 });
-            } catch (CouldNotPerformException ex) {
+            } catch (Exception ex) {
                 Exception exx = new CouldNotPerformException("Could not start recording!", ex);
                 print(exx);
                 throw exx;
@@ -439,7 +439,7 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
                 Platform.runLater(() -> {
                     recordingProperty.set(false);
                 });
-            } catch (CouldNotPerformException ex) {
+            } catch (Exception ex) {
                 Exception exx = new CouldNotPerformException("Could not stop recording!", ex);
                 print(exx);
                 throw exx;
@@ -505,58 +505,66 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
     public static final String SCOPE_VIDEO_RECORD = "/videorecorder";
     public static final String SCOPE_RSBAG_RECORD = "/logger/rsbag/all";
 
-    public void startVideoRecording() throws CouldNotPerformException, InterruptedException {
+    public void startVideoRecording() throws Exception, InterruptedException {
         print("start video recording... ");
         startRecordServer(SCOPE_VIDEO_RECORD, recordFile);
     }
 
-    public void stopVideoRecording() throws CouldNotPerformException, InterruptedException {
+    public void stopVideoRecording() throws Exception, InterruptedException {
         print("stop video recording... ");
         stopRecordServer(SCOPE_VIDEO_RECORD);
     }
 
-    public void startRSBagRecording() throws CouldNotPerformException, InterruptedException {
+    public void startRSBagRecording() throws Exception, InterruptedException {
         print("start rsbag recording... ");
         startRecordServer(SCOPE_RSBAG_RECORD, recordFile + ".tide");
     }
 
-    public void stopRSBagRecording() throws CouldNotPerformException, InterruptedException {
+    public void stopRSBagRecording() throws Exception, InterruptedException {
         print("stop rsbag recording... ");
         stopRecordServer(SCOPE_RSBAG_RECORD);
     }
 
-    public void startRecordServer(final String scope, final String recordFile) throws CouldNotPerformException, InterruptedException {
+    public void startRecordServer(final String scope, final String recordFile) throws Exception, InterruptedException {
         RSBRemoteServer recordServer = RSBFactoryImpl.getInstance().createSynchronizedRemoteServer(scope);
         recordServer.activate();
 
+        System.out.println("1");
         if ((Boolean) recordServer.call("isstarted").getData()) {
             print("there is still a recording ongoing which will now be finished via record server" + scope);
             stopRecordServer(scope);
         }
 
-        if ((Boolean) recordServer.call("isopen").getData()) {
+        System.out.println("2");
+        if (recordServer.call("isopen").getData() instanceof String) {
             print("there is still a record file opened which will now be closed via record server" + scope);
             stopRecordServer(scope);
         }
 
+        System.out.println("3");
         // open
         print("open new file via record server " + scope);
         recordServer.call("open", recordFile);
 
+        System.out.println("4");
         // verify open
-        if (!(Boolean) recordServer.call("isopen").getData()) {
+        if (!recordServer.call("isopen").getData().equals(recordFile)) {
+            System.out.println("44");
             throw new VerificationFailedException("could not open record file via record server " + scope);
         }
 
+        System.out.println("5");
         // start
         print("try to start recording via record server " + scope);
         recordServer.call("start");
 
+        System.out.println("6");
         // verify start
         if (!(Boolean) recordServer.call("isstarted").getData()) {
             throw new VerificationFailedException("could not start recording via record server " + scope);
         }
 
+        System.out.println("7");
         print("recording successfully started on record server " + scope);
     }
 
@@ -564,20 +572,24 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
         RSBRemoteServer recordServer = RSBFactoryImpl.getInstance().createSynchronizedRemoteServer(scope);
         recordServer.activate();
 
+        System.out.println("s1");
         if ((Boolean) recordServer.call("isstarted").getData()) {
             recordServer.call("stop");
         }
 
-        if ((Boolean) recordServer.call("isopen").getData()) {
+        System.out.println("s2");
+        if (recordServer.call("isopen").getData() instanceof String) {
             recordServer.call("close");
         }
 
+        System.out.println("s3");
         // verify
         if ((Boolean) recordServer.call("isstarted").getData()) {
             throw new VerificationFailedException("could not stop recording via record server " + scope, new InvalidStateException("record server " + scope + " does not respont!"));
         }
 
-        if ((Boolean) recordServer.call("isopen").getData()) {
+        System.out.println("s4");
+        if (recordServer.call("isopen").getData() instanceof String) {
             throw new VerificationFailedException("could not close record file via record server " + scope);
         }
 
