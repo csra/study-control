@@ -6,6 +6,8 @@ import de.citec.csra.studycontrol.jp.JPStudyStopRecordScript;
 import de.citec.csra.studycontrol.jp.JPStudyCondition;
 import de.citec.csra.studycontrol.jp.JPStudyConditionScriptDirectory;
 import de.citec.csra.studycontrol.jp.JPStudyDataPefix;
+import de.citec.csra.studycontrol.jp.JPStudyEnableRSBagRecording;
+import de.citec.csra.studycontrol.jp.JPStudyEnableVideoRecording;
 import de.citec.csra.studycontrol.jp.JPStudyName;
 import de.citec.csra.studycontrol.jp.JPStudyParticipantId;
 import java.io.BufferedReader;
@@ -43,11 +45,13 @@ import org.openbase.jul.exception.InvalidStateException;
 import org.openbase.jul.exception.NotAvailableException;
 import org.openbase.jul.exception.VerificationFailedException;
 import org.openbase.jul.exception.printer.ExceptionPrinter;
+import org.openbase.jul.exception.printer.LogLevel;
 import org.openbase.jul.exception.printer.VariablePrinter;
 import org.openbase.jul.extension.rsb.com.RSBFactoryImpl;
 import org.openbase.jul.extension.rsb.iface.RSBRemoteServer;
 import org.openbase.jul.schedule.GlobalCachedExecutorService;
 import org.openbase.jul.visual.javafx.iface.DynamicPane;
+import org.slf4j.LoggerFactory;
 
 /**
  * FXML Controller class
@@ -56,16 +60,21 @@ import org.openbase.jul.visual.javafx.iface.DynamicPane;
  */
 public class StudyControlPaneController implements Initializable, DynamicPane {
 
+    private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(StudyControlPaneController.class);
+
     private final BooleanProperty recordingProperty = new SimpleBooleanProperty(false);
     private final BooleanProperty busyProperty = new SimpleBooleanProperty(false);
     private final BooleanProperty recordingValidProperty = new SimpleBooleanProperty(false);
     private final VariablePrinter printer = new VariablePrinter();
+
     private String recordPath;
     private String recordFile;
+
     private ExecuteStreamHandler scriptStreamHandler = new ExecuteStreamHandler() {
         @Override
         public void setProcessInputStream(OutputStream os) throws IOException {
-            // no script input supported
+            // no script input supported yet.
+            // use env variables to pass properties to the scripts.
         }
 
         @Override
@@ -103,7 +112,7 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
 
     @FXML
     private Button recordStopButton;
-    
+
     @FXML
     private Button cancelButton;
 
@@ -171,7 +180,7 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
     @Override
     public void initContent() {
 
-        // component setup
+        // initial component setup
         recordStartButton.setDisable(true);
 
         try {
@@ -182,6 +191,18 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
         } catch (JPNotAvailableException ex) {
             ExceptionPrinter.printHistory(ex, System.err);
             print(ex);
+        }
+        
+        try {
+            enableRSBagRecordCheckBox.setSelected(JPService.getProperty(JPStudyEnableRSBagRecording.class).getValue());
+        } catch (JPNotAvailableException ex) {
+            enableRSBagRecordCheckBox.setSelected(false);
+        }
+        
+        try {
+            enableVideoRecordCheckBox.setSelected(JPService.getProperty(JPStudyEnableVideoRecording.class).getValue());
+        } catch (JPNotAvailableException ex) {
+            enableVideoRecordCheckBox.setSelected(false);
         }
 
         try {
@@ -249,14 +270,14 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
                 print(ex);
             }
         });
-        
+
         cancelButton.setOnAction((event) -> {
             event.consume();
             try {
                 recordingStatePane.setStyle("-fx-background-color: yellow");
                 recordingStateLabel.setText("Cancel Action");
                 Future action = currentAction;
-                if(action != null && !action.isDone()) {
+                if (action != null && !action.isDone()) {
                     action.cancel(true);
                     action.wait();
                 }
@@ -330,7 +351,7 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
         try {
             verifyRecording();
         } catch (VerificationFailedException ex) {
-//            ex.printStackTrace();
+            ExceptionPrinter.printHistory(ex, LOGGER, LogLevel.DEBUG);
             return false;
         }
         return true;
