@@ -38,9 +38,9 @@
     <packaging>jar</packaging>
     
     <scm>
-        <connection>scm:git:http://projects.cit-ec.uni-bielefeld.de/git/lsp-csra.study-control.git</connection>
-        <developerConnection>scm:git:http://projects.cit-ec.uni-bielefeld.de/git/lsp-csra.study-control.git</developerConnection>
-        <url>http://projects.cit-ec.uni-bielefeld.de/git/lsp-csra.study-control.git</url>
+        <connection>scm:git:https://github.com/csra/study-control.git</connection>
+        <developerConnection>scm:git:https://github.com/csra/study-control.git</developerConnection>
+        <url>https://github.com/csra/study-control.git</url>
     </scm>
 
     <build>
