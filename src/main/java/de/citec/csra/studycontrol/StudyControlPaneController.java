@@ -20,7 +20,10 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
@@ -582,7 +585,16 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
 
         // open
         print("open new file via record server " + scope);
-        recordServer.call("open", recordFile);
+        Future openFuture = recordServer.callAsync("ensuredirectoryandopen", recordFile);
+        try {
+            openFuture.get(10, TimeUnit.SECONDS);
+        } catch(ExecutionException | TimeoutException ex) {
+            // cancel task if execution is not possible
+            openFuture.cancel(true);
+            
+            // try fallback solution in case the record server does not support the "ensuredirectoryandopen" feature
+            recordServer.call("open", recordFile);
+        }
 
         // verify open
         if (!recordServer.call("isopen").getData().equals(recordFile)) {
