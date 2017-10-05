@@ -1,7 +1,5 @@
 package de.citec.csra.studycontrol;
 
-import de.citec.csra.studycontrol.jp.JPStudyStartRecordScript;
-import de.citec.csra.studycontrol.jp.JPStudyStopRecordScript;
 import de.citec.csra.studycontrol.jp.JPStudyCondition;
 import de.citec.csra.studycontrol.jp.JPStudyConditionScriptDirectory;
 import de.citec.csra.studycontrol.jp.JPStudyDataPefix;
@@ -9,17 +7,21 @@ import de.citec.csra.studycontrol.jp.JPStudyEnableRSBagRecording;
 import de.citec.csra.studycontrol.jp.JPStudyEnableVideoRecording;
 import de.citec.csra.studycontrol.jp.JPStudyName;
 import de.citec.csra.studycontrol.jp.JPStudyParticipantId;
+import de.citec.csra.studycontrol.jp.JPStudyStartRecordScript;
+import de.citec.csra.studycontrol.jp.JPStudyStopRecordScript;
+import java.util.concurrent.TimeUnit;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.openbase.jps.core.JPService;
+import rst.domotic.state.PowerStateType.PowerState;
 
 public class StudyControl extends Application {
-    
+
     @Override
     public void start(Stage stage) throws Exception {
-        
+
         // setup java property service
         JPService.setApplicationName(StudyControl.class);
         JPService.registerProperty(JPStudyName.class);
@@ -33,6 +35,9 @@ public class StudyControl extends Application {
         JPService.registerProperty(JPStudyStopRecordScript.class);
         JPService.parseAndExitOnError(getParameters().getRaw());
 
+        // setup record light
+        RecordLight.init();
+
         // setup scene
         Scene scene = new Scene(FXMLLoader.load(getClass().getResource("/fxml/StudyControlPane.fxml")));
         scene.getStylesheets().add("/styles/main-style.css");
@@ -40,11 +45,21 @@ public class StudyControl extends Application {
         stage.setScene(scene);
         stage.show();
     }
-    
+
     @Override
     public void stop() throws Exception {
+
+        // close gui
         super.stop();
-        
+
+        // switch of record light
+        try {
+            // waiting here is needed to make sure the command is transmitted before the remotes are finalized.
+            RecordLight.setPowerState(PowerState.State.OFF).get(100, TimeUnit.MILLISECONDS);
+        } catch (Exception ex) {
+            // just continue the shutdown if not possible
+        }
+
         // make sure all shutdown deamons are triggered
         System.exit(0);
     }
