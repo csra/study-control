@@ -40,6 +40,8 @@ import javafx.scene.layout.Pane;
 import org.apache.commons.exec.CommandLine;
 import org.apache.commons.exec.DefaultExecutor;
 import org.apache.commons.exec.ExecuteStreamHandler;
+import org.openbase.bco.dal.remote.unit.ColorableLightRemote;
+import org.openbase.bco.dal.remote.unit.Units;
 import org.openbase.jps.core.JPService;
 import org.openbase.jps.exception.JPNotAvailableException;
 import org.openbase.jps.preset.AbstractJPFile;
@@ -55,6 +57,8 @@ import org.openbase.jul.extension.rsb.iface.RSBRemoteServer;
 import org.openbase.jul.schedule.GlobalCachedExecutorService;
 import org.openbase.jul.visual.javafx.iface.DynamicPane;
 import org.slf4j.LoggerFactory;
+import rst.vision.HSBColorType;
+import rst.vision.HSBColorType.HSBColor;
 
 /**
  * FXML Controller class
@@ -64,6 +68,22 @@ import org.slf4j.LoggerFactory;
 public class StudyControlPaneController implements Initializable, DynamicPane {
 
     private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(StudyControlPaneController.class);
+
+    private static ColorableLightRemote recordLight;
+
+    static {
+        try {
+            recordLight = Units.getUnit("f1397800-9741-401d-a46f-8bf139c12e92", false, Units.COLORABLE_LIGHT);
+        } catch (Exception ex) {
+            ExceptionPrinter.printHistory("Could not init record light of the control room.", ex, LOGGER);
+        }
+    }
+
+    private static final HSBColor HSV_COLOR_RED = HSBColor.newBuilder().setHue(0).setSaturation(100).setBrightness(100).build();
+    private static final HSBColor HSV_COLOR_GREEN = HSBColor.newBuilder().setHue(130).setSaturation(100).setBrightness(100).build();
+    private static final HSBColor HSV_COLOR_BLUE = HSBColor.newBuilder().setHue(260).setSaturation(100).setBrightness(100).build();
+    private static final HSBColor HSV_COLOR_ORANGE = HSBColor.newBuilder().setHue(40).setSaturation(100).setBrightness(100).build();
+    private static final HSBColor HSV_COLOR_YELLOW = HSBColor.newBuilder().setHue(100).setSaturation(100).setBrightness(100).build();
 
     private final BooleanProperty recordingProperty = new SimpleBooleanProperty(false);
     private final BooleanProperty busyProperty = new SimpleBooleanProperty(false);
@@ -195,13 +215,13 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
             ExceptionPrinter.printHistory(ex, System.err);
             print(ex);
         }
-        
+
         try {
             enableRSBagRecordCheckBox.setSelected(JPService.getProperty(JPStudyEnableRSBagRecording.class).getValue());
         } catch (JPNotAvailableException ex) {
             enableRSBagRecordCheckBox.setSelected(false);
         }
-        
+
         try {
             enableVideoRecordCheckBox.setSelected(JPService.getProperty(JPStudyEnableVideoRecording.class).getValue());
         } catch (JPNotAvailableException ex) {
@@ -231,9 +251,11 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
                 if (recording) {
                     recordingStatePane.setStyle("-fx-background-color: red");
                     recordingStateLabel.setText("Recording started");
+                    colorFeedback(HSV_COLOR_RED);
                 } else {
                     recordingStatePane.setStyle("-fx-background-color: blue");
                     recordingStateLabel.setText("Recording Stopped");
+                    colorFeedback(HSV_COLOR_BLUE);
                 }
             } catch (Exception ex) {
                 ExceptionPrinter.printHistory(ex, System.err);
@@ -256,6 +278,7 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
                 busyProperty.set(true);
                 recordingStatePane.setStyle("-fx-background-color: green");
                 recordingStateLabel.setText("Setup Recording");
+                colorFeedback(HSV_COLOR_GREEN);
                 currentAction = startRecording();
             } catch (Exception ex) {
                 print(ex);
@@ -268,6 +291,7 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
                 busyProperty.set(true);
                 recordingStatePane.setStyle("-fx-background-color: green");
                 recordingStateLabel.setText("Finish Recording");
+                colorFeedback(HSV_COLOR_GREEN);
                 currentAction = stopRecording();
             } catch (Exception ex) {
                 print(ex);
@@ -279,6 +303,7 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
             try {
                 recordingStatePane.setStyle("-fx-background-color: yellow");
                 recordingStateLabel.setText("Cancel Action");
+                colorFeedback(HSV_COLOR_YELLOW);
                 Future action = currentAction;
                 if (action != null && !action.isDone()) {
                     action.cancel(true);
@@ -345,6 +370,7 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
     public void internalPrint(final Exception ex) {
         ExceptionPrinter.printHistory(ex, printer);
         recordingStatePane.setStyle("-fx-background-color: orange");
+        colorFeedback(HSV_COLOR_ORANGE);
         recordingStateLabel.setText("Warning Occured");
         logArea.setText(printer.getMessages());
         logArea.appendText("");
@@ -588,10 +614,10 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
         Future openFuture = recordServer.callAsync("ensuredirectoryandopen", recordFile);
         try {
             openFuture.get(10, TimeUnit.SECONDS);
-        } catch(ExecutionException | TimeoutException ex) {
+        } catch (ExecutionException | TimeoutException ex) {
             // cancel task if execution is not possible
             openFuture.cancel(true);
-            
+
             // try fallback solution in case the record server does not support the "ensuredirectoryandopen" feature
             recordServer.call("open", recordFile);
         }
@@ -635,5 +661,15 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
         }
 
         print("recording stopped on record server " + scope);
+    }
+
+    private void colorFeedback(final HSBColorType.HSBColor color) {
+        if (recordLight != null && recordLight.isActive() && recordLight.isConnected() && recordLight.isDataAvailable()) {
+            try {
+                recordLight.setColor(color);
+            } catch (CouldNotPerformException ex) {
+                ExceptionPrinter.printHistory("Could not set feedback color of record light!", ex, LOGGER);
+            }
+        }
     }
 }
