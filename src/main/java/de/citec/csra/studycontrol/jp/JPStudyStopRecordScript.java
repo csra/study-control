@@ -14,7 +14,7 @@ public class JPStudyStopRecordScript extends AbstractJPFile {
      public static final String[] COMMANDIDENTIFIER = {"--stop-record-script"};
 
     public JPStudyStopRecordScript() {
-        super(COMMANDIDENTIFIER, FileHandler.ExistenceHandling.Must, FileHandler.AutoMode.Off);
+        super(COMMANDIDENTIFIER, FileHandler.ExistenceHandling.CanExist, FileHandler.AutoMode.Off);
     }
     
     @Override
