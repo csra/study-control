@@ -1,6 +1,10 @@
 package de.citec.csra.studycontrol;
 
+import java.util.concurrent.CancellationException;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import org.openbase.bco.dal.remote.unit.ColorableLightRemote;
 import org.openbase.bco.dal.remote.unit.Units;
 import org.openbase.jul.exception.CouldNotPerformException;
@@ -28,10 +32,11 @@ public class RecordLight {
     public static final HSBColorType.HSBColor HSV_COLOR_YELLOW = HSBColorType.HSBColor.newBuilder().setHue(100).setSaturation(100).setBrightness(100).build();
 
     public static ColorableLightRemote recordLight;
+    public static Future<? extends ColorableLightRemote> recordLightInitFuture;
 
     public static void init() {
         try {
-            recordLight = Units.getUnit("f1397800-9741-401d-a46f-8bf139c12e92", false, Units.COLORABLE_LIGHT);
+            recordLightInitFuture = Units.getFutureUnit("f1397800-9741-401d-a46f-8bf139c12e92", false, Units.COLORABLE_LIGHT);
         } catch (Exception ex) {
             ExceptionPrinter.printHistory("Could not init record light of the control room.", ex, LOGGER);
         }
@@ -69,6 +74,14 @@ public class RecordLight {
 
     private static void verify() throws CouldNotPerformException {
         if (recordLight == null) {
+
+            if (recordLightInitFuture != null && recordLightInitFuture.isDone() && !recordLightInitFuture.isCancelled()) {
+                try {
+                    recordLight = recordLightInitFuture.get(100, TimeUnit.MILLISECONDS);
+                } catch (InterruptedException | ExecutionException | CancellationException | TimeoutException ex) {
+                    // continue with not availble exection
+                }
+            }
             throw new NotAvailableException("RecordLight");
         }
 
