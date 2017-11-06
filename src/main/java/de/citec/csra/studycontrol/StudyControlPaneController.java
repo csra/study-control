@@ -17,6 +17,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -64,6 +66,8 @@ import org.slf4j.LoggerFactory;
 public class StudyControlPaneController implements Initializable, DynamicPane {
 
     private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(StudyControlPaneController.class);
+
+    private final static SimpleDateFormat DATE_FORMATTER = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
 
     private final BooleanProperty recordingProperty = new SimpleBooleanProperty(false);
     private final BooleanProperty busyProperty = new SimpleBooleanProperty(false);
@@ -405,7 +409,7 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
                 verifyRecording();
 
                 recordPath = savePath.getText() + "/" + studyName.getText() + "/participant-" + participantIdTextField.getText();
-                recordFile = recordPath + "/" + "condition-" + conditionComboBox.getSelectionModel().getSelectedItem();
+                recordFile = recordPath + "/" + "condition-" + conditionComboBox.getSelectionModel().getSelectedItem() + "_" + DATE_FORMATTER.format(new Date());
                 print("setup record path to " + recordPath);
                 print("setup record file to " + recordFile);
 
