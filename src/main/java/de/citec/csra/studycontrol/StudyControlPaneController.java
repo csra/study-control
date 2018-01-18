@@ -588,12 +588,12 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
         recordServer.activate();
 
         if ((Boolean) recordServer.call("isstarted").getData()) {
-            print("there is still a recording ongoing which will now be finished via record server" + scope);
+            print("there is still a recording ongoing which will now be finished via record server " + scope);
             stopRecordServer(scope);
         }
 
         if (recordServer.call("isopen").getData() instanceof String) {
-            print("there is still a record file opened which will now be closed via record server" + scope);
+            print("there is still a record file opened which will now be closed via record server " + scope);
             stopRecordServer(scope);
         }
 
