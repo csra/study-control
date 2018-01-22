@@ -5,6 +5,8 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+
+import org.openbase.bco.dal.lib.layer.unit.ColorableLight;
 import org.openbase.bco.dal.remote.unit.ColorableLightRemote;
 import org.openbase.bco.dal.remote.unit.Units;
 import org.openbase.jul.exception.CouldNotPerformException;
@@ -15,10 +17,10 @@ import org.openbase.jul.schedule.FutureProcessor;
 import org.slf4j.LoggerFactory;
 import rst.domotic.action.ActionFutureType.ActionFuture;
 import rst.domotic.state.PowerStateType;
+import rst.domotic.state.PowerStateType.PowerState;
 import rst.vision.HSBColorType;
 
 /**
- *
  * @author <a href="mailto:mpohling@cit-ec.uni-bielefeld.de">Divine Threepwood</a>
  */
 public class RecordLight {
@@ -31,66 +33,49 @@ public class RecordLight {
     public static final HSBColorType.HSBColor HSV_COLOR_ORANGE = HSBColorType.HSBColor.newBuilder().setHue(60).setSaturation(100).setBrightness(100).build();
     public static final HSBColorType.HSBColor HSV_COLOR_YELLOW = HSBColorType.HSBColor.newBuilder().setHue(100).setSaturation(100).setBrightness(100).build();
 
-    public static ColorableLightRemote recordLight;
-    public static Future<? extends ColorableLightRemote> recordLightInitFuture;
+    public static final String RECORD_LIGHT_ID = "f1397800-9741-401d-a46f-8bf139c12e92";
+    public static final long RECORD_LIGHT_TIMEOUT = 100;
 
-    public static void init() {
+
+    public static boolean init() {
         try {
-            recordLightInitFuture = Units.getFutureUnit("f1397800-9741-401d-a46f-8bf139c12e92", false, Units.COLORABLE_LIGHT);
+            Units.getFutureUnit(RECORD_LIGHT_ID, true, Units.COLORABLE_LIGHT).get(RECORD_LIGHT_TIMEOUT, TimeUnit.MILLISECONDS);
         } catch (Exception ex) {
-            ExceptionPrinter.printHistory("Could not init record light of the control room.", ex, LOGGER);
+            ExceptionPrinter.printHistory("Could not init record light!", ex, LOGGER);
+            return false;
         }
+        return true;
     }
 
-    public static Future<ActionFuture> setColor(final HSBColorType.HSBColor color) {
+    private static ColorableLight getLight() throws NotAvailableException {
         try {
-            verify();
-            return recordLight.setColor(color);
-        } catch (CouldNotPerformException ex) {
-            ExceptionPrinter.printHistory("Could not control record light!", ex, LOGGER);
-            return FutureProcessor.canceledFuture(ex);
+            return Units.getFutureUnit(RECORD_LIGHT_ID, false, Units.COLORABLE_LIGHT).get(RECORD_LIGHT_TIMEOUT, TimeUnit.MILLISECONDS);
+        } catch (Exception ex) {
+            throw new NotAvailableException("RecordLight", ex);
         }
     }
 
-    public static Future<ActionFuture> setPowerState(final PowerStateType.PowerState.State powerState) {
+    public static void setColor(final HSBColorType.HSBColor color) {
         try {
-            verify();
-            return recordLight.setPowerState(powerState);
-        } catch (CouldNotPerformException ex) {
+            getLight().setColor(color).get(RECORD_LIGHT_TIMEOUT, TimeUnit.MILLISECONDS);
+        } catch (Exception ex) {
             ExceptionPrinter.printHistory("Could not control record light!", ex, LOGGER);
-            return FutureProcessor.canceledFuture(ex);
         }
     }
 
-    public static Future<ActionFuture> setNeutralWhite() {
+    public static void setPowerState(final PowerStateType.PowerState.State powerState) {
         try {
-            verify();
-            return recordLight.setNeutralWhite();
-        } catch (CouldNotPerformException ex) {
+            getLight().setPowerState(powerState).get(RECORD_LIGHT_TIMEOUT, TimeUnit.MILLISECONDS);
+        } catch (Exception ex) {
             ExceptionPrinter.printHistory("Could not control record light!", ex, LOGGER);
-            return FutureProcessor.canceledFuture(ex);
         }
     }
 
-    private static void verify() throws CouldNotPerformException {
-        if (recordLight == null) {
-
-            if (recordLightInitFuture != null && recordLightInitFuture.isDone() && !recordLightInitFuture.isCancelled()) {
-                try {
-                    recordLight = recordLightInitFuture.get(100, TimeUnit.MILLISECONDS);
-                } catch (InterruptedException | ExecutionException | CancellationException | TimeoutException ex) {
-                    // continue with not availble exection
-                }
-            }
-            throw new NotAvailableException("RecordLight");
-        }
-
-        if (!recordLight.isActive() || !recordLight.isDataAvailable()) {
-            throw new InvalidStateException("Record light not ready yet!");
-        }
-
-        if (!recordLight.isConnected()) {
-            throw new InvalidStateException("Can not connect to the record light.!");
+    public static void setNeutralWhite() {
+        try {
+            getLight().setNeutralWhite().get(RECORD_LIGHT_TIMEOUT, TimeUnit.MILLISECONDS);
+        } catch (Exception ex) {
+            ExceptionPrinter.printHistory("Could not control record light!", ex, LOGGER);
         }
     }
 }
