@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="dal.example" />
+        <module name="dal.lib" />
+        <module name="dal.remote" />
+        <module name="dal.task" />
+        <module name="dal.test" />
+        <module name="dal.visual" />
+        <module name="jul.audio" />
+        <module name="jul.exception" />
+        <module name="jul.extension.openhab" />
+        <module name="jul.extension.protobuf" />
+        <module name="jul.extension.rct" />
+        <module name="jul.extension.rsb.com" />
+        <module name="jul.extension.rsb.container" />
+        <module name="jul.extension.rsb.interface" />
+        <module name="jul.extension.rsb.processing" />
+        <module name="jul.extension.rsb.scope" />
+        <module name="jul.extension.rsb.util" />
+        <module name="jul.extension.rst.container" />
+        <module name="jul.extension.rst.interface" />
+        <module name="jul.extension.rst.processing" />
+        <module name="jul.extension.rst.storage" />
+        <module name="jul.extension.rst.transform" />
+        <module name="jul.extension.rst.util" />
+        <module name="jul.extension.tcp" />
+        <module name="jul.extension.xml" />
+        <module name="jul.interface" />
+        <module name="jul.pattern" />
+        <module name="jul.pattern.launch" />
+        <module name="jul.pattern.trigger" />
+        <module name="jul.processing" />
+        <module name="jul.schedule" />
+        <module name="jul.storage" />
+        <module name="jul.visual.javafx" />
+        <module name="jul.visual.swing" />
+        <module name="registry.agent.core" />
+        <module name="registry.agent.lib" />
+        <module name="registry.agent.remote" />
+        <module name="registry.agent.test" />
+        <module name="registry.app.core" />
+        <module name="registry.app.lib" />
+        <module name="registry.app.remote" />
+        <module name="registry.app.test" />
+        <module name="registry.device.core" />
+        <module name="registry.device.lib" />
+        <module name="registry.device.remote" />
+        <module name="registry.device.test" />
+        <module name="registry.lib" />
+        <module name="registry.location.core" />
+        <module name="registry.location.lib" />
+        <module name="registry.location.remote" />
+        <module name="registry.location.test" />
+        <module name="registry.remote" />
+        <module name="registry.scene.core" />
+        <module name="registry.scene.lib" />
+        <module name="registry.scene.remote" />
+        <module name="registry.scene.test" />
+        <module name="registry.unit.core" />
+        <module name="registry.unit.lib" />
+        <module name="registry.unit.remote" />
+        <module name="registry.unit.test" />
+        <module name="registry.user.activity.core" />
+        <module name="registry.user.activity.lib" />
+        <module name="registry.user.activity.remote" />
+        <module name="registry.user.activity.test" />
+        <module name="registry.user.core" />
+        <module name="registry.user.lib" />
+        <module name="registry.user.remote" />
+        <module name="registry.user.test" />
+        <module name="registry.util" />
+        <module name="StudyControl" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="bco" target="${maven.compiler.target}" />
+      <module name="dal" target="1.8" />
+      <module name="dal.example" target="1.8" />
+      <module name="dal.lib" target="1.8" />
+      <module name="dal.remote" target="1.8" />
+      <module name="dal.task" target="1.8" />
+      <module name="dal.test" target="1.8" />
+      <module name="dal.visual" target="1.8" />
+      <module name="jul" target="1.8" />
+      <module name="jul.audio" target="1.8" />
+      <module name="jul.exception" target="1.8" />
+      <module name="jul.extension" target="1.8" />
+      <module name="jul.extension.openhab" target="1.8" />
+      <module name="jul.extension.protobuf" target="1.8" />
+      <module name="jul.extension.rct" target="1.8" />
+      <module name="jul.extension.rsb" target="1.8" />
+      <module name="jul.extension.rsb.com" target="1.8" />
+      <module name="jul.extension.rsb.container" target="1.8" />
+      <module name="jul.extension.rsb.interface" target="1.8" />
+      <module name="jul.extension.rsb.processing" target="1.8" />
+      <module name="jul.extension.rsb.scope" target="1.8" />
+      <module name="jul.extension.rsb.util" target="1.8" />
+      <module name="jul.extension.rst" target="1.8" />
+      <module name="jul.extension.rst.container" target="1.8" />
+      <module name="jul.extension.rst.interface" target="1.8" />
+      <module name="jul.extension.rst.processing" target="1.8" />
+      <module name="jul.extension.rst.storage" target="1.8" />
+      <module name="jul.extension.rst.transform" target="1.8" />
+      <module name="jul.extension.rst.util" target="1.8" />
+      <module name="jul.extension.tcp" target="1.8" />
+      <module name="jul.extension.xml" target="1.8" />
+      <module name="jul.interface" target="1.8" />
+      <module name="jul.pattern" target="1.8" />
+      <module name="jul.pattern.launch" target="1.8" />
+      <module name="jul.pattern.module" target="1.8" />
+      <module name="jul.pattern.trigger" target="1.8" />
+      <module name="jul.processing" target="1.8" />
+      <module name="jul.schedule" target="1.8" />
+      <module name="jul.storage" target="1.8" />
+      <module name="jul.visual" target="1.8" />
+      <module name="jul.visual.javafx" target="1.8" />
+      <module name="jul.visual.swing" target="1.8" />
+      <module name="registry" target="1.8" />
+      <module name="registry.agent" target="1.8" />
+      <module name="registry.agent.core" target="1.8" />
+      <module name="registry.agent.lib" target="1.8" />
+      <module name="registry.agent.remote" target="1.8" />
+      <module name="registry.agent.test" target="1.8" />
+      <module name="registry.app" target="1.8" />
+      <module name="registry.app.core" target="1.8" />
+      <module name="registry.app.lib" target="1.8" />
+      <module name="registry.app.remote" target="1.8" />
+      <module name="registry.app.test" target="1.8" />
+      <module name="registry.device" target="1.8" />
+      <module name="registry.device.core" target="1.8" />
+      <module name="registry.device.lib" target="1.8" />
+      <module name="registry.device.remote" target="1.8" />
+      <module name="registry.device.test" target="1.8" />
+      <module name="registry.lib" target="1.8" />
+      <module name="registry.location" target="1.8" />
+      <module name="registry.location.core" target="1.8" />
+      <module name="registry.location.lib" target="1.8" />
+      <module name="registry.location.remote" target="1.8" />
+      <module name="registry.location.test" target="1.8" />
+      <module name="registry.remote" target="1.8" />
+      <module name="registry.scene" target="1.8" />
+      <module name="registry.scene.core" target="1.8" />
+      <module name="registry.scene.lib" target="1.8" />
+      <module name="registry.scene.remote" target="1.8" />
+      <module name="registry.scene.test" target="1.8" />
+      <module name="registry.unit" target="1.8" />
+      <module name="registry.unit.core" target="1.8" />
+      <module name="registry.unit.lib" target="1.8" />
+      <module name="registry.unit.remote" target="1.8" />
+      <module name="registry.unit.test" target="1.8" />
+      <module name="registry.user" target="1.8" />
+      <module name="registry.user.activity" target="1.8" />
+      <module name="registry.user.activity.core" target="1.8" />
+      <module name="registry.user.activity.lib" target="1.8" />
+      <module name="registry.user.activity.remote" target="1.8" />
+      <module name="registry.user.activity.test" target="1.8" />
+      <module name="registry.user.core" target="1.8" />
+      <module name="registry.user.lib" target="1.8" />
+      <module name="registry.user.remote" target="1.8" />
+      <module name="registry.user.test" target="1.8" />
+      <module name="registry.util" target="1.8" />
+      <module name="StudyControl" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

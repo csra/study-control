@@ -16,6 +16,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.openbase.jps.core.JPService;
 import rst.domotic.state.PowerStateType.PowerState;
+import rst.domotic.state.PowerStateType.PowerState.State;
 
 public class StudyControl extends Application {
 
@@ -55,7 +56,7 @@ public class StudyControl extends Application {
         // switch of record light
         try {
             // waiting here is needed to make sure the command is transmitted before the remotes are finalized.
-            RecordLight.setPowerState(PowerState.State.OFF).get(100, TimeUnit.MILLISECONDS);
+            RecordLight.setPowerState(State.OFF);
         } catch (Exception ex) {
             // just continue the shutdown if not possible
         }
