@@ -1,13 +1,16 @@
 package de.citec.csra.studycontrol;
 
 import org.junit.Assert;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class RecordLightTest {
+public class RecordLightTest {
 
-    @org.junit.jupiter.api.Test
-    void init() throws Exception {
-          Assert.assertTrue(RecordLight.init());
+
+    // Test makes only sense while connected with the csra system.
+    /*@Test*/
+    public void init() {
+        Assert.assertTrue(RecordLight.init());
     }
 }

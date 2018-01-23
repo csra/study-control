@@ -9,6 +9,7 @@ import java.util.concurrent.TimeoutException;
 import org.openbase.bco.dal.lib.layer.unit.ColorableLight;
 import org.openbase.bco.dal.remote.unit.ColorableLightRemote;
 import org.openbase.bco.dal.remote.unit.Units;
+import org.openbase.bco.registry.remote.Registries;
 import org.openbase.jul.exception.CouldNotPerformException;
 import org.openbase.jul.exception.InvalidStateException;
 import org.openbase.jul.exception.NotAvailableException;
@@ -34,12 +35,13 @@ public class RecordLight {
     public static final HSBColorType.HSBColor HSV_COLOR_YELLOW = HSBColorType.HSBColor.newBuilder().setHue(100).setSaturation(100).setBrightness(100).build();
 
     public static final String RECORD_LIGHT_ID = "f1397800-9741-401d-a46f-8bf139c12e92";
-    public static final long RECORD_LIGHT_TIMEOUT = 100;
 
+    public static final long RECORD_LIGHT_INIT_TIMEOUT = 3000;
+    public static final long RECORD_LIGHT_TIMEOUT = 100;
 
     public static boolean init() {
         try {
-            Units.getFutureUnit(RECORD_LIGHT_ID, true, Units.COLORABLE_LIGHT).get(RECORD_LIGHT_TIMEOUT, TimeUnit.MILLISECONDS);
+            Units.getFutureUnit(RECORD_LIGHT_ID, true, Units.COLORABLE_LIGHT).get(RECORD_LIGHT_INIT_TIMEOUT, TimeUnit.MILLISECONDS).setColor(HSV_COLOR_BLUE);
         } catch (Exception ex) {
             ExceptionPrinter.printHistory("Could not init record light!", ex, LOGGER);
             return false;
