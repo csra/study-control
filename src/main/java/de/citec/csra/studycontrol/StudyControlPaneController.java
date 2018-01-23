@@ -10,12 +10,8 @@ import de.citec.csra.studycontrol.jp.JPStudyName;
 import de.citec.csra.studycontrol.jp.JPStudyParticipantId;
 import de.citec.csra.studycontrol.jp.JPStudyStartRecordScript;
 import de.citec.csra.studycontrol.jp.JPStudyStopRecordScript;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
+
+import java.io.*;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -408,8 +404,11 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
             try {
                 verifyRecording();
 
-                recordPath = savePath.getText() + "/" + studyName.getText() + "/participant-" + participantIdTextField.getText();
-                recordFile = recordPath + "/" + "condition-" + conditionComboBox.getSelectionModel().getSelectedItem() + "_" + DATE_FORMATTER.format(new Date());
+                // normalize save path
+                savePath.setText(new File(savePath.getText()).getAbsolutePath());
+
+                recordPath = new File(savePath.getText() + "/" + studyName.getText() + "/participant-" + participantIdTextField.getText()).getAbsolutePath();
+                recordFile = new File(recordPath + "/" + "condition-" + conditionComboBox.getSelectionModel().getSelectedItem() + "_" + DATE_FORMATTER.format(new Date())).getAbsolutePath();
                 print("setup record path to " + recordPath);
                 print("setup record file to " + recordFile);
 
