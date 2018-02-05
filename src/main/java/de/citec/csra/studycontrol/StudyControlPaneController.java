@@ -50,6 +50,7 @@ import org.openbase.jul.exception.printer.LogLevel;
 import org.openbase.jul.exception.printer.VariablePrinter;
 import org.openbase.jul.extension.rsb.com.RSBFactoryImpl;
 import org.openbase.jul.extension.rsb.iface.RSBRemoteServer;
+import org.openbase.jul.processing.StringProcessor;
 import org.openbase.jul.schedule.GlobalCachedExecutorService;
 import org.openbase.jul.visual.javafx.iface.DynamicPane;
 import org.slf4j.LoggerFactory;
@@ -404,11 +405,10 @@ public class StudyControlPaneController implements Initializable, DynamicPane {
             try {
                 verifyRecording();
 
-                // normalize save path
-                savePath.setText(new File(savePath.getText()).getAbsolutePath());
-
-                recordPath = new File(savePath.getText() + "/" + studyName.getText() + "/participant-" + participantIdTextField.getText()).getAbsolutePath();
-                recordFile = new File(recordPath + "/" + "condition-" + conditionComboBox.getSelectionModel().getSelectedItem() + "_" + DATE_FORMATTER.format(new Date())).getAbsolutePath();
+                // generate and normalize record path components
+                savePath.setText(StringProcessor.transformToNormalizedFileName(savePath.getText()));
+                recordPath = StringProcessor.transformToNormalizedFileName(savePath.getText() + "/" + studyName.getText() + "/participant-" + participantIdTextField.getText());
+                recordFile = StringProcessor.transformToNormalizedFileName(recordPath + "/" + "condition-" + conditionComboBox.getSelectionModel().getSelectedItem() + "_" + DATE_FORMATTER.format(new Date()));
                 print("setup record path to " + recordPath);
                 print("setup record file to " + recordFile);
 
