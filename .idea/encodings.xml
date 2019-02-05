@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding">
+  <component name="Encoding" addBOMForNewFiles="with NO BOM">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/bco.dal" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../openbase/bco.dal/control" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/bco.dal/example" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/bco.dal/lib" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/bco.dal/remote" charset="UTF-8" />
@@ -10,56 +11,35 @@
     <file url="file://$PROJECT_DIR$/../../openbase/bco.dal/test" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/bco.dal/visual" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/bco.registry" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/agent-registry" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/agent-registry/core" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/agent-registry/lib" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/agent-registry/remote" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/agent-registry/test" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/app-registry" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/app-registry/core" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/app-registry/lib" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/app-registry/remote" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/app-registry/test" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/device-registry" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/device-registry/core" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/device-registry/lib" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/device-registry/remote" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/device-registry/test" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/activity-registry" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/activity-registry/core" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/activity-registry/lib" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/activity-registry/remote" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/activity-registry/test" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/class-registry" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/class-registry/core" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/class-registry/lib" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/class-registry/remote" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/class-registry/test" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/lib" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/location-registry" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/location-registry/core" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/location-registry/lib" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/location-registry/remote" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/location-registry/test" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/remote" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/scene-registry" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/scene-registry/core" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/scene-registry/lib" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/scene-registry/remote" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/scene-registry/test" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/template-registry" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/template-registry/core" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/template-registry/lib" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/template-registry/remote" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/template-registry/test" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/unit-registry" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/unit-registry/core" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/unit-registry/lib" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/unit-registry/remote" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/unit-registry/test" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/user-activity-registry" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/user-activity-registry/core" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/user-activity-registry/lib" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/user-activity-registry/remote" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/user-activity-registry/test" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/user-registry" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/user-registry/core" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/user-registry/lib" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/user-registry/remote" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/user-registry/test" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/bco.registry/util" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/jul" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../openbase/jul/annotation" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/jul/audio" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/jul/exception" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/jul/extension" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/jul/extension/openhab" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/jul/extension/protobuf" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/jul/extension/rct" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/jul/extension/rsb" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/jul/extension/rsb/com" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/jul/extension/rsb/container" charset="UTF-8" />
@@ -67,17 +47,17 @@
     <file url="file://$PROJECT_DIR$/../../openbase/jul/extension/rsb/processing" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/jul/extension/rsb/scope" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/jul/extension/rsb/util" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/jul/extension/rst" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/jul/extension/rst/container" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/jul/extension/rst/interface" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/jul/extension/rst/processing" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/jul/extension/rst/storage" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/jul/extension/rst/transform" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/jul/extension/rst/util" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/jul/extension/tcp" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../openbase/jul/extension/type" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../openbase/jul/extension/type/interface" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../openbase/jul/extension/type/processing" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../openbase/jul/extension/type/storage" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../openbase/jul/extension/type/transform" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../openbase/jul/extension/type/util" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/jul/extension/xml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/jul/interface" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/jul/pattern" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../openbase/jul/pattern/controller" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/jul/pattern/default" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/jul/pattern/launch" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/jul/pattern/trigger" charset="UTF-8" />

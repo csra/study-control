@@ -6,12 +6,39 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="bco.dal.control" />
+        <module name="bco.dal.example" />
+        <module name="bco.dal.lib" />
+        <module name="bco.dal.remote" />
+        <module name="bco.dal.task" />
+        <module name="bco.dal.test" />
+        <module name="bco.dal.visual" />
+        <module name="bco.registry.activity.core" />
+        <module name="bco.registry.activity.lib" />
+        <module name="bco.registry.activity.remote" />
+        <module name="bco.registry.activity.test" />
+        <module name="bco.registry.class.core" />
+        <module name="bco.registry.class.lib" />
+        <module name="bco.registry.class.remote" />
+        <module name="bco.registry.class.test" />
+        <module name="bco.registry.lib" />
+        <module name="bco.registry.remote" />
+        <module name="bco.registry.template.core" />
+        <module name="bco.registry.template.lib" />
+        <module name="bco.registry.template.remote" />
+        <module name="bco.registry.template.test" />
+        <module name="bco.registry.unit.core" />
+        <module name="bco.registry.unit.lib" />
+        <module name="bco.registry.unit.remote" />
+        <module name="bco.registry.unit.test" />
+        <module name="bco.registry.util" />
         <module name="dal.example" />
         <module name="dal.lib" />
         <module name="dal.remote" />
         <module name="dal.task" />
         <module name="dal.test" />
         <module name="dal.visual" />
+        <module name="jul.annotation" />
         <module name="jul.audio" />
         <module name="jul.exception" />
         <module name="jul.extension.openhab" />
@@ -30,9 +57,15 @@
         <module name="jul.extension.rst.transform" />
         <module name="jul.extension.rst.util" />
         <module name="jul.extension.tcp" />
+        <module name="jul.extension.type.interface" />
+        <module name="jul.extension.type.processing" />
+        <module name="jul.extension.type.storage" />
+        <module name="jul.extension.type.transform" />
+        <module name="jul.extension.type.util" />
         <module name="jul.extension.xml" />
         <module name="jul.interface" />
         <module name="jul.pattern" />
+        <module name="jul.pattern.controller" />
         <module name="jul.pattern.launch" />
         <module name="jul.pattern.trigger" />
         <module name="jul.processing" />
@@ -80,6 +113,38 @@
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="bco" target="${maven.compiler.target}" />
+      <module name="bco.dal" target="1.8" />
+      <module name="bco.dal.control" target="1.8" />
+      <module name="bco.dal.example" target="1.8" />
+      <module name="bco.dal.lib" target="1.8" />
+      <module name="bco.dal.remote" target="1.8" />
+      <module name="bco.dal.task" target="1.8" />
+      <module name="bco.dal.test" target="1.8" />
+      <module name="bco.dal.visual" target="1.8" />
+      <module name="bco.registry" target="1.8" />
+      <module name="bco.registry.activity" target="1.8" />
+      <module name="bco.registry.activity.core" target="1.8" />
+      <module name="bco.registry.activity.lib" target="1.8" />
+      <module name="bco.registry.activity.remote" target="1.8" />
+      <module name="bco.registry.activity.test" target="1.8" />
+      <module name="bco.registry.class" target="1.8" />
+      <module name="bco.registry.class.core" target="1.8" />
+      <module name="bco.registry.class.lib" target="1.8" />
+      <module name="bco.registry.class.remote" target="1.8" />
+      <module name="bco.registry.class.test" target="1.8" />
+      <module name="bco.registry.lib" target="1.8" />
+      <module name="bco.registry.remote" target="1.8" />
+      <module name="bco.registry.template" target="1.8" />
+      <module name="bco.registry.template.core" target="1.8" />
+      <module name="bco.registry.template.lib" target="1.8" />
+      <module name="bco.registry.template.remote" target="1.8" />
+      <module name="bco.registry.template.test" target="1.8" />
+      <module name="bco.registry.unit" target="1.8" />
+      <module name="bco.registry.unit.core" target="1.8" />
+      <module name="bco.registry.unit.lib" target="1.8" />
+      <module name="bco.registry.unit.remote" target="1.8" />
+      <module name="bco.registry.unit.test" target="1.8" />
+      <module name="bco.registry.util" target="1.8" />
       <module name="dal" target="1.8" />
       <module name="dal.example" target="1.8" />
       <module name="dal.lib" target="1.8" />
@@ -88,6 +153,7 @@
       <module name="dal.test" target="1.8" />
       <module name="dal.visual" target="1.8" />
       <module name="jul" target="1.8" />
+      <module name="jul.annotation" target="1.8" />
       <module name="jul.audio" target="1.8" />
       <module name="jul.exception" target="1.8" />
       <module name="jul.extension" target="1.8" />
@@ -109,9 +175,16 @@
       <module name="jul.extension.rst.transform" target="1.8" />
       <module name="jul.extension.rst.util" target="1.8" />
       <module name="jul.extension.tcp" target="1.8" />
+      <module name="jul.extension.type" target="1.8" />
+      <module name="jul.extension.type.interface" target="1.8" />
+      <module name="jul.extension.type.processing" target="1.8" />
+      <module name="jul.extension.type.storage" target="1.8" />
+      <module name="jul.extension.type.transform" target="1.8" />
+      <module name="jul.extension.type.util" target="1.8" />
       <module name="jul.extension.xml" target="1.8" />
       <module name="jul.interface" target="1.8" />
       <module name="jul.pattern" target="1.8" />
+      <module name="jul.pattern.controller" target="1.8" />
       <module name="jul.pattern.launch" target="1.8" />
       <module name="jul.pattern.module" target="1.8" />
       <module name="jul.pattern.trigger" target="1.8" />
@@ -165,7 +238,12 @@
       <module name="registry.user.remote" target="1.8" />
       <module name="registry.user.test" target="1.8" />
       <module name="registry.util" target="1.8" />
-      <module name="StudyControl" target="1.8" />
+      <module name="StudyControl" target="11" />
     </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="StudyControl" options="-bootclasspath &quot;$APPLICATION_HOME_DIR$/jdk/Contents/Home/jre/lib/resources.jar:$APPLICATION_HOME_DIR$/jdk/Contents/Home/jre/lib/rt.jar:$APPLICATION_HOME_DIR$/jdk/Contents/Home/jre/lib/sunrsasign.jar:$APPLICATION_HOME_DIR$/jdk/Contents/Home/jre/lib/jsse.jar:$APPLICATION_HOME_DIR$/jdk/Contents/Home/jre/lib/jce.jar:$APPLICATION_HOME_DIR$/jdk/Contents/Home/jre/lib/charsets.jar:$APPLICATION_HOME_DIR$/jdk/Contents/Home/jre/lib/jfr.jar:$APPLICATION_HOME_DIR$/jdk/Contents/Home/jre/classes:/Library/Java/JavaVirtualMachines/zulu-11.jdk/Contents/Home/lib/jfxrt.jar&quot;" />
+    </option>
   </component>
 </project>

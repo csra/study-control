@@ -7,8 +7,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
 import org.openbase.bco.dal.lib.layer.unit.ColorableLight;
-import org.openbase.bco.dal.remote.unit.ColorableLightRemote;
-import org.openbase.bco.dal.remote.unit.Units;
+import org.openbase.bco.dal.remote.layer.unit.Units;
 import org.openbase.bco.registry.remote.Registries;
 import org.openbase.jul.exception.CouldNotPerformException;
 import org.openbase.jul.exception.InvalidStateException;
@@ -16,10 +15,9 @@ import org.openbase.jul.exception.NotAvailableException;
 import org.openbase.jul.exception.printer.ExceptionPrinter;
 import org.openbase.jul.schedule.FutureProcessor;
 import org.slf4j.LoggerFactory;
-import rst.domotic.action.ActionFutureType.ActionFuture;
-import rst.domotic.state.PowerStateType;
-import rst.domotic.state.PowerStateType.PowerState;
-import rst.vision.HSBColorType;
+import org.openbase.type.domotic.state.PowerStateType;
+import org.openbase.type.domotic.state.PowerStateType.PowerState;
+import org.openbase.type.vision.HSBColorType;
 
 /**
  * @author <a href="mailto:mpohling@cit-ec.uni-bielefeld.de">Divine Threepwood</a>

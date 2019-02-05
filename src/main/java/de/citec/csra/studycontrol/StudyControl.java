@@ -9,14 +9,12 @@ import de.citec.csra.studycontrol.jp.JPStudyName;
 import de.citec.csra.studycontrol.jp.JPStudyParticipantId;
 import de.citec.csra.studycontrol.jp.JPStudyStartRecordScript;
 import de.citec.csra.studycontrol.jp.JPStudyStopRecordScript;
-import java.util.concurrent.TimeUnit;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.openbase.jps.core.JPService;
-import rst.domotic.state.PowerStateType.PowerState;
-import rst.domotic.state.PowerStateType.PowerState.State;
+import org.openbase.type.domotic.state.PowerStateType.PowerState.State;
 
 public class StudyControl extends Application {
 
