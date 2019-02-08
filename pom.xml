@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>de.cit-ec.csra</groupId>
@@ -27,16 +28,16 @@
             <timezone>+1</timezone>
         </developer>
     </developers>
-    
+
     <licenses>
         <license>
             <name>GPLv3</name>
             <url>http://www.gnu.org/licenses/gpl.html</url>
         </license>
     </licenses>
-    
+
     <packaging>jar</packaging>
-    
+
     <scm>
         <connection>scm:git:https://github.com/csra/study-control.git</connection>
         <developerConnection>scm:git:https://github.com/csra/study-control.git</developerConnection>
@@ -45,7 +46,6 @@
 
     <build>
         <plugins>
-            <plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-dependency-plugin</artifactId>
@@ -63,8 +63,9 @@
                             <outputDirectory>${project.build.directory}/classes</outputDirectory>
                         </configuration>
                     </execution>
-                 </executions>
-             </plugin>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>appassembler-maven-plugin</artifactId>
                 <version>2.0.0</version>
@@ -113,7 +114,7 @@
             </plugin>
         </plugins>
     </build>
-    
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <test.configs>${project.basedir}/target/generated-test-config</test.configs>
@@ -126,7 +127,7 @@
         <dependency.jul.version>2.0-SNAPSHOT</dependency.jul.version>
         <dependency.bco.version>2.0-SNAPSHOT</dependency.bco.version>
     </properties>
-    
+
     <dependencies>
         <!-- Java  FX Material Design Lib -->
         <dependency>
@@ -144,13 +145,13 @@
             <artifactId>jul.extension.rsb.com</artifactId>
             <version>${dependency.jul.version}</version>
         </dependency>
-        
+
         <dependency>
             <groupId>org.openbase</groupId>
             <artifactId>bco.dal.remote</artifactId>
             <version>${dependency.bco.version}</version>
         </dependency>
-        
+
         <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-exec -->
         <dependency>
             <groupId>org.apache.commons</groupId>

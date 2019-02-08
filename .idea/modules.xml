@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/StudyControl.iml" filepath="$PROJECT_DIR$/StudyControl.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../openbase/bco.dal/bco.dal.iml" filepath="$PROJECT_DIR$/../../openbase/bco.dal/bco.dal.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../openbase/bco.dal/bco.dal.iml" filepath="$PROJECT_DIR$/../../openbase/bco.dal/bco.dal.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../openbase/bco.dal/control/bco.dal.control.iml" filepath="$PROJECT_DIR$/../../openbase/bco.dal/control/bco.dal.control.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../openbase/bco.dal/example/bco.dal.example.iml" filepath="$PROJECT_DIR$/../../openbase/bco.dal/example/bco.dal.example.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../openbase/bco.dal/lib/bco.dal.lib.iml" filepath="$PROJECT_DIR$/../../openbase/bco.dal/lib/bco.dal.lib.iml" />
@@ -13,14 +12,11 @@
       <module fileurl="file://$PROJECT_DIR$/../../openbase/bco.dal/test/bco.dal.test.iml" filepath="$PROJECT_DIR$/../../openbase/bco.dal/test/bco.dal.test.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../openbase/bco.dal/visual/bco.dal.visual.iml" filepath="$PROJECT_DIR$/../../openbase/bco.dal/visual/bco.dal.visual.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../openbase/bco.registry/bco.registry.iml" filepath="$PROJECT_DIR$/../../openbase/bco.registry/bco.registry.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../openbase/bco.registry/bco.registry.iml" filepath="$PROJECT_DIR$/../../openbase/bco.registry/bco.registry.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../openbase/bco.registry/activity-registry/bco.registry.activity.iml" filepath="$PROJECT_DIR$/../../openbase/bco.registry/activity-registry/bco.registry.activity.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../openbase/bco.registry/activity-registry/bco.registry.activity.iml" filepath="$PROJECT_DIR$/../../openbase/bco.registry/activity-registry/bco.registry.activity.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../openbase/bco.registry/activity-registry/core/bco.registry.activity.core.iml" filepath="$PROJECT_DIR$/../../openbase/bco.registry/activity-registry/core/bco.registry.activity.core.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../openbase/bco.registry/activity-registry/lib/bco.registry.activity.lib.iml" filepath="$PROJECT_DIR$/../../openbase/bco.registry/activity-registry/lib/bco.registry.activity.lib.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../openbase/bco.registry/activity-registry/remote/bco.registry.activity.remote.iml" filepath="$PROJECT_DIR$/../../openbase/bco.registry/activity-registry/remote/bco.registry.activity.remote.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../openbase/bco.registry/activity-registry/test/bco.registry.activity.test.iml" filepath="$PROJECT_DIR$/../../openbase/bco.registry/activity-registry/test/bco.registry.activity.test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../openbase/bco.registry/class-registry/bco.registry.class.iml" filepath="$PROJECT_DIR$/../../openbase/bco.registry/class-registry/bco.registry.class.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../openbase/bco.registry/class-registry/bco.registry.class.iml" filepath="$PROJECT_DIR$/../../openbase/bco.registry/class-registry/bco.registry.class.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../openbase/bco.registry/class-registry/core/bco.registry.class.core.iml" filepath="$PROJECT_DIR$/../../openbase/bco.registry/class-registry/core/bco.registry.class.core.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../openbase/bco.registry/class-registry/lib/bco.registry.class.lib.iml" filepath="$PROJECT_DIR$/../../openbase/bco.registry/class-registry/lib/bco.registry.class.lib.iml" />
@@ -29,12 +25,10 @@
       <module fileurl="file://$PROJECT_DIR$/../../openbase/bco.registry/lib/bco.registry.lib.iml" filepath="$PROJECT_DIR$/../../openbase/bco.registry/lib/bco.registry.lib.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../openbase/bco.registry/remote/bco.registry.remote.iml" filepath="$PROJECT_DIR$/../../openbase/bco.registry/remote/bco.registry.remote.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../openbase/bco.registry/template-registry/bco.registry.template.iml" filepath="$PROJECT_DIR$/../../openbase/bco.registry/template-registry/bco.registry.template.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../openbase/bco.registry/template-registry/bco.registry.template.iml" filepath="$PROJECT_DIR$/../../openbase/bco.registry/template-registry/bco.registry.template.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../openbase/bco.registry/template-registry/core/bco.registry.template.core.iml" filepath="$PROJECT_DIR$/../../openbase/bco.registry/template-registry/core/bco.registry.template.core.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../openbase/bco.registry/template-registry/lib/bco.registry.template.lib.iml" filepath="$PROJECT_DIR$/../../openbase/bco.registry/template-registry/lib/bco.registry.template.lib.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../openbase/bco.registry/template-registry/remote/bco.registry.template.remote.iml" filepath="$PROJECT_DIR$/../../openbase/bco.registry/template-registry/remote/bco.registry.template.remote.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../openbase/bco.registry/template-registry/test/bco.registry.template.test.iml" filepath="$PROJECT_DIR$/../../openbase/bco.registry/template-registry/test/bco.registry.template.test.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../../openbase/bco.registry/unit-registry/bco.registry.unit.iml" filepath="$PROJECT_DIR$/../../openbase/bco.registry/unit-registry/bco.registry.unit.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../openbase/bco.registry/unit-registry/bco.registry.unit.iml" filepath="$PROJECT_DIR$/../../openbase/bco.registry/unit-registry/bco.registry.unit.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../openbase/bco.registry/unit-registry/core/bco.registry.unit.core.iml" filepath="$PROJECT_DIR$/../../openbase/bco.registry/unit-registry/core/bco.registry.unit.core.iml" />
       <module fileurl="file://$PROJECT_DIR$/../../openbase/bco.registry/unit-registry/lib/bco.registry.unit.lib.iml" filepath="$PROJECT_DIR$/../../openbase/bco.registry/unit-registry/lib/bco.registry.unit.lib.iml" />
