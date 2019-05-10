@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="Encoding" addBOMForNewFiles="with NO BOM">
+  <component name="Encoding">
     <file url="file://$PROJECT_DIR$" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/bco.dal" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/bco.dal/control" charset="UTF-8" />
@@ -37,6 +37,10 @@
     <file url="file://$PROJECT_DIR$/../../openbase/jul" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/jul/annotation" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/jul/audio" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../openbase/jul/communication" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../openbase/jul/communication/controller" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../openbase/jul/communication/default" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../openbase/jul/communication/tcp" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/jul/exception" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/jul/extension" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/jul/extension/protobuf" charset="UTF-8" />
@@ -47,14 +51,12 @@
     <file url="file://$PROJECT_DIR$/../../openbase/jul/extension/rsb/processing" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/jul/extension/rsb/scope" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/jul/extension/rsb/util" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/jul/extension/tcp" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/jul/extension/type" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/jul/extension/type/interface" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/jul/extension/type/processing" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/jul/extension/type/storage" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/jul/extension/type/transform" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/jul/extension/type/util" charset="UTF-8" />
-    <file url="file://$PROJECT_DIR$/../../openbase/jul/extension/xml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/jul/interface" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/jul/pattern" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/jul/pattern/controller" charset="UTF-8" />
@@ -62,6 +64,9 @@
     <file url="file://$PROJECT_DIR$/../../openbase/jul/pattern/launch" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/jul/pattern/trigger" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/jul/processing" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../openbase/jul/processing/default" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../openbase/jul/processing/json" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/../../openbase/jul/processing/xml" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/jul/schedule" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/jul/storage" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/../../openbase/jul/visual" charset="UTF-8" />
