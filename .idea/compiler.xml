@@ -8,40 +8,43 @@
         <outputRelativeToContentRoot value="true" />
         <module name="jul.extension.rct" />
         <module name="registry.remote" />
-        <module name="registry.user.activity.lib" />
+        <module name="jul.processing.xml" />
         <module name="bco.registry.template.lib" />
-        <module name="registry.user.lib" />
         <module name="dal.test" />
         <module name="jul.extension.type.util" />
+        <module name="jul.extension.rsb.scope" />
         <module name="jul.extension.type.processing" />
         <module name="registry.device.lib" />
-        <module name="bco.registry.unit.test" />
-        <module name="bco.registry.lib" />
+        <module name="jul.visual.swing" />
         <module name="bco.dal.lib" />
         <module name="registry.user.activity.remote" />
         <module name="bco.registry.unit.lib" />
-        <module name="registry.device.core" />
+        <module name="registry.user.activity.lib" />
+        <module name="dal.task" />
         <module name="bco.registry.util" />
-        <module name="jul.processing.json" />
         <module name="bco.dal.test" />
         <module name="jul.pattern.launch" />
-        <module name="jul.extension.type.storage" />
+        <module name="bco.dal.control" />
+        <module name="registry.device.core" />
         <module name="registry.user.activity.core" />
         <module name="jul.extension.rst.util" />
         <module name="registry.scene.core" />
-        <module name="jul.annotation" />
+        <module name="jul.extension.rsb.container" />
         <module name="jul.extension.rst.processing" />
         <module name="bco.registry.unit.remote" />
-        <module name="registry.location.remote" />
+        <module name="bco.registry.template.core" />
         <module name="jul.pattern.trigger" />
         <module name="jul.extension.rst.interface" />
         <module name="dal.remote" />
-        <module name="jul.visual.swing" />
+        <module name="jul.communication.controller" />
         <module name="bco.registry.template.remote" />
         <module name="bco.dal.visual" />
-        <module name="bco.registry.class.remote" />
+        <module name="bco.registry.lib" />
+        <module name="bco.registry.message.remote" />
         <module name="registry.user.remote" />
-        <module name="jul.extension.rsb.processing" />
+        <module name="registry.unit.test" />
+        <module name="bco.registry.message.test" />
+        <module name="jul.communication.tcp" />
         <module name="registry.agent.core" />
         <module name="jul.extension.rsb.com" />
         <module name="jul.extension.openhab" />
@@ -49,16 +52,13 @@
         <module name="registry.location.test" />
         <module name="jul.exception" />
         <module name="jul.extension.tcp" />
-        <module name="registry.unit.test" />
-        <module name="registry.location.lib" />
-        <module name="jul.storage" />
+        <module name="jul.extension.rsb.processing" />
         <module name="bco.registry.unit.core" />
         <module name="jul.interface" />
-        <module name="registry.user.core" />
         <module name="jul.extension.rsb.interface" />
         <module name="registry.agent.lib" />
         <module name="jul.extension.rst.transform" />
-        <module name="jul.extension.type.interface" />
+        <module name="jul.storage" />
         <module name="dal.lib" />
         <module name="StudyControl" />
         <module name="jul.extension.protobuf" />
@@ -67,51 +67,55 @@
         <module name="bco.registry.class.test" />
         <module name="bco.dal.example" />
         <module name="registry.user.test" />
-        <module name="jul.processing" />
-        <module name="bco.registry.class.lib" />
+        <module name="registry.user.lib" />
+        <module name="jul.schedule" />
+        <module name="bco.registry.unit.test" />
         <module name="bco.registry.template.test" />
+        <module name="registry.app.remote" />
         <module name="jul.pattern" />
         <module name="bco.registry.activity.test" />
-        <module name="bco.registry.class.core" />
         <module name="registry.user.activity.test" />
+        <module name="jul.extension.rst.storage" />
         <module name="registry.unit.core" />
-        <module name="dal.task" />
-        <module name="registry.location.core" />
+        <module name="jul.processing.json" />
         <module name="jul.pattern.controller" />
-        <module name="registry.lib" />
+        <module name="jul.processing" />
         <module name="jul.extension.type.transform" />
         <module name="registry.scene.remote" />
-        <module name="jul.processing.xml" />
         <module name="registry.app.core" />
         <module name="registry.agent.remote" />
-        <module name="bco.dal.task" />
+        <module name="registry.location.core" />
         <module name="jul.visual.javafx" />
+        <module name="bco.registry.message.core" />
         <module name="registry.util" />
         <module name="jul.extension.xml" />
-        <module name="jul.extension.rsb.container" />
+        <module name="bco.dal.task" />
         <module name="bco.registry.remote" />
-        <module name="bco.dal.control" />
+        <module name="bco.registry.activity.lib" />
+        <module name="jul.annotation" />
         <module name="registry.device.test" />
         <module name="registry.scene.test" />
         <module name="bco.dal.remote" />
-        <module name="jul.communication.controller" />
         <module name="registry.unit.lib" />
         <module name="jul.extension.rst.container" />
         <module name="registry.app.lib" />
         <module name="jul.communication" />
-        <module name="jul.communication.tcp" />
-        <module name="jul.schedule" />
-        <module name="jul.extension.rst.storage" />
-        <module name="bco.registry.activity.lib" />
+        <module name="jul.extension.type.storage" />
+        <module name="jul.extension.type.interface" />
+        <module name="bco.registry.class.core" />
+        <module name="registry.location.remote" />
         <module name="dal.visual" />
-        <module name="registry.unit.remote" />
-        <module name="jul.extension.rsb.scope" />
+        <module name="bco.registry.class.lib" />
+        <module name="registry.user.core" />
+        <module name="registry.location.lib" />
         <module name="dal.example" />
         <module name="jul.audio" />
         <module name="bco.registry.activity.remote" />
-        <module name="registry.app.remote" />
-        <module name="bco.registry.template.core" />
+        <module name="registry.lib" />
+        <module name="bco.registry.class.remote" />
+        <module name="bco.registry.message.lib" />
         <module name="registry.agent.test" />
+        <module name="registry.unit.remote" />
         <module name="registry.scene.lib" />
         <module name="bco.registry.activity.core" />
       </profile>
@@ -138,6 +142,11 @@
       <module name="bco.registry.class.remote" target="1.8" />
       <module name="bco.registry.class.test" target="1.8" />
       <module name="bco.registry.lib" target="1.8" />
+      <module name="bco.registry.message" target="1.8" />
+      <module name="bco.registry.message.core" target="1.8" />
+      <module name="bco.registry.message.lib" target="1.8" />
+      <module name="bco.registry.message.remote" target="1.8" />
+      <module name="bco.registry.message.test" target="1.8" />
       <module name="bco.registry.remote" target="1.8" />
       <module name="bco.registry.template" target="1.8" />
       <module name="bco.registry.template.core" target="1.8" />
