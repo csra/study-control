@@ -54,7 +54,7 @@ public class StudyControl extends Application {
         // switch of record light
         try {
             // waiting here is needed to make sure the command is transmitted before the remotes are finalized.
-            RecordLight.setPowerState(State.OFF);
+            RecordLight.cancelLastAction();
         } catch (Exception ex) {
             // just continue the shutdown if not possible
         }
