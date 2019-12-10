@@ -29,7 +29,7 @@ public class RecordLight {
     public static final HSBColorType.HSBColor HSV_COLOR_ORANGE = HSBColorType.HSBColor.newBuilder().setHue(30).setSaturation(1d).setBrightness(1d).build();
     public static final HSBColorType.HSBColor HSV_COLOR_YELLOW = HSBColorType.HSBColor.newBuilder().setHue(20).setSaturation(1d).setBrightness(1d).build();
 
-    public static final String RECORD_LIGHT_ID = "99aec777-6fa4-403b-ae01-ce78754296a3";
+    public static final String RECORD_LIGHT_ID = "f1397800-9741-401d-a46f-8bf139c12e92";
 
     public static final long RECORD_LIGHT_INIT_TIMEOUT = 5000;
     public static final long RECORD_LIGHT_TIMEOUT = 1000;
